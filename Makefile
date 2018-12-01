@@ -58,6 +58,9 @@ table.o: table.c table.h MemManagement.h
 MemManagement.o: MemManagement.c MemManagement.h
 	$(CC) $(CFLAGS) -c MemManagement.c
 
+debug: CFLAGS += -DDEBUG -ggdb
+debug: all
+
 clean:
 	rm -f *.o  
 
