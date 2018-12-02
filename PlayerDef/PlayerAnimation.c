@@ -28,7 +28,6 @@ void addFrame(player_animation_p* animation, int spriteColumn, int spriteRow, in
 
 void updateAnimation(player_animation_p* animation){
     animation->currentFrame = ((animation->currentFrame)+1)%(animation->numFrames);
-    printf("Current Frame: %d\n",animation->currentFrame);
 }
 
 frame_p* getCurrentFrame(player_animation_p* animation){

@@ -6,8 +6,9 @@
 
 int processKeys(controller_p* controller,stack* keysPressed);
 
-void initController(controller_p* controller,player_p* player, sdl_p* sdlSystem, background_p* background){
+void initController(controller_p* controller,player_p* player, room_p* room, sdl_p* sdlSystem, background_p* background){
     controller->player = player;
+    controller->room = room;
     controller->sdlSystem = sdlSystem;
     controller->background = background;
 }
@@ -22,8 +23,12 @@ stack* getView(controller_p* controller, int layer){
     stack* returnStack = NULL;
     if(layer==0) returnStack = getBackgroundView(controller->background);
     
-    stack* playerCoords = getPlayerView(controller->player, layer);
-    returnStack = combineStacks(playerCoords, returnStack);
+    coordinates_p* center = getPlayerCoordinates(controller->player);
+    stack* roomViews = getRoomView(controller->room, layer, center);
+    stack* playerViews = getPlayerView(controller->player, layer);
+    
+    returnStack = combineStacks(playerViews, returnStack);
+    returnStack = combineStacks(roomViews, returnStack);
     
     return returnStack;
 }

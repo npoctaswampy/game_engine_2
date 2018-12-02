@@ -40,6 +40,10 @@ void destructPlayer(player_p* player){
     
 }
 
+coordinates_p* getPlayerCoordinates(player_p* player){
+    return player->coords;
+}
+
 stack* getPlayerView(player_p* player, int layer){
     stack* s = NULL;
     if(layer == player->coords->layer){
@@ -69,8 +73,8 @@ void playerProcessKey(player_p* player,int k){
         case NONE:
             player->crntAnimateIndex = player->idleAnimation;
             break;
-        updatePlayerLocation(player, k);
     }
+    updatePlayerLocation(player, k);
 }
 
 /* Initialization Functions
@@ -165,16 +169,16 @@ void updatePlayerToCurrentFrame(player_p* player){
 void updatePlayerLocation(player_p* player,int k){
     switch(k){
         case UP:
-            player->coords->mapY-=2;
+            player->coords->mapY-=8;
             break;
         case DOWN:
-            player->coords->mapY+=2;
+            player->coords->mapY+=8;
             break;
         case LEFT:
-            player->coords->mapX-=2;
+            player->coords->mapX-=8;
             break;
         case RIGHT:
-            player->coords->mapX+=2;
+            player->coords->mapX+=8;
             break;   
     }
 }

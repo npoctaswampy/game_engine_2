@@ -27,6 +27,7 @@ typedef struct player_t{
 void initPlayer(player_p* player, images_p* imageBank);
 void destructPlayer(player_p* player);
 stack* getPlayerView(player_p* player, int layer);
+coordinates_p* getPlayerCoordinates(player_p* player);
 void playerProcessKey(player_p* player,int k);
 
 #endif

@@ -47,5 +47,5 @@ typedef enum{FIRST,Q,ESCAPE,F,P,
 	     X,Z,E,NONE
 	     } key;
              
-#define LAYERS 10
+#define LAYERS 2
 #endif

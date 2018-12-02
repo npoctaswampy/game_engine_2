@@ -4,6 +4,7 @@
 #include "SDLInternals.h"
 #include "Window.h"
 #include "Controller.h"
+#include "RoomDef/Room.h"
 #include "PlayerDef/Player.h"
 #include "ImageBank.h"
 #include "Background.h"
@@ -15,15 +16,17 @@ typedef struct gamestate_t{
     images_p* imageBank;
     player_p* player;
     background_p* background;
+    room_p* room;
 }gamestate_p;
 
 void runGame(gamestate_p* gameState);
 gamestate_p* initializeSystems();
 images_p* buildImageBank();
 sdl_p* buildSdlSystem();
+room_p* buildRoom(images_p* imageBank);
 player_p* buildPlayer(images_p* imageBank);
 background_p* buildBackground(images_p* imageBank);
-controller_p* buildController(player_p* player, sdl_p* sdlSystem, background_p* background);
+controller_p* buildController(player_p* player, room_p* room, sdl_p* sdlSystem, background_p* background);
 window_p* buildWindow(sdl_p* sdlSystem, controller_p* controller, images_p* imageBank);
 void destructGameState(gamestate_p* gameState);
 
@@ -49,8 +52,9 @@ gamestate_p* initializeSystems(){
     gameState->imageBank = buildImageBank();
     gameState->sdlSystem = buildSdlSystem(gameState->imageBank);
     gameState->player = buildPlayer(gameState->imageBank);
+    gameState->room = buildRoom(gameState->imageBank);
     gameState->background = buildBackground(gameState->imageBank);
-    gameState->controller = buildController(gameState->player, gameState->sdlSystem, gameState->background);
+    gameState->controller = buildController(gameState->player, gameState->room, gameState->sdlSystem, gameState->background);
     gameState->window = buildWindow(gameState->sdlSystem, gameState->controller, gameState->imageBank);
     
     return gameState;
@@ -84,6 +88,12 @@ sdl_p* buildSdlSystem(){
     return sdlSystem;
 }
 
+room_p* buildRoom(images_p* imageBank){
+    room_p* room = w_malloc(sizeof(room_p*));
+    initRoom(room, imageBank);
+    return room;
+}
+
 player_p* buildPlayer(images_p* imageBank){
     player_p* player = w_malloc(sizeof(player_p));
     initPlayer(player, imageBank);
@@ -96,9 +106,9 @@ background_p* buildBackground(images_p* imageBank){
     return background; 
 }
 
-controller_p* buildController(player_p* player, sdl_p* sdlSystem, background_p* background){
+controller_p* buildController(player_p* player, room_p* room, sdl_p* sdlSystem, background_p* background){
     controller_p* controller = w_malloc(sizeof(controller_p));
-    initController(controller, player, sdlSystem, background);
+    initController(controller, player, room, sdlSystem, background);
     return controller;
 }
 
