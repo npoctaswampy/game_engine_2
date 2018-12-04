@@ -1,7 +1,7 @@
-#include "Common.h"
-#include "Background.h"
-#include "PlayerDef/Player.h"
-#include "RoomDef/Room.h"
+#include "../Common.h"
+#include "../BackgroundDef/Background.h"
+#include "../PlayerDef/Player.h"
+#include "../RoomDef/Room.h"
 
 #ifndef CONTROLLER
 #define CONTROLLER

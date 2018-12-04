@@ -12,7 +12,7 @@ Bugs: Does not like incorrect values or data types being passed.
 #include <stdio.h> 
 #include <stdlib.h>
 #include <assert.h>
-#include "Common.h"
+#include "../Common.h"
 
 /*Local function definitions*/
 int find_duplicate(table_t* T, hashkey_t key, int spot, data_t inf);

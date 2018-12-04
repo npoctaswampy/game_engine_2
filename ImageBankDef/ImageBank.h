@@ -1,5 +1,5 @@
-#include "Common.h"
-#include "SDLInternals.h"
+#include "../Common.h"
+#include "../SDLInternals.h"
 
 #ifndef IMAGEBANK
 #define IMAGEBANK

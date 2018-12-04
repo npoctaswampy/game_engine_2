@@ -1,5 +1,5 @@
 #include "../Common.h"
-#include "../ImageBank.h"
+#include "../ImageBankDef/ImageBank.h"
 #include "PlayerAnimation.h" 
 
 #ifndef PLAYER

@@ -9,12 +9,12 @@
 
 #ifndef STACK
 #define STACK
-#include "stack.h"
+#include "DataStructures/stack.h"
 #endif
 
 #ifndef TABLE
 #define TABLE
-#include "table.h"
+#include "DataStructures/table.h"
 #endif
 
 #ifndef COMMON

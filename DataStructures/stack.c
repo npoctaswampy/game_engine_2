@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Common.h"
+#include "../Common.h"
 
 stack* new_node(void* data)
 {

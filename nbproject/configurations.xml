@@ -2,12 +2,14 @@
 <configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
+      <df name="DataStructures">
+        <in>stack.c</in>
+        <in>table.c</in>
+        <in>table.h</in>
+      </df>
       <in>MemManagement.c</in>
       <in>SDLInternals.c</in>
       <in>game_main.c</in>
-      <in>stack.c</in>
-      <in>table.c</in>
-      <in>table.h</in>
     </df>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -43,17 +45,17 @@
           <preBuildCommand></preBuildCommand>
         </preBuild>
       </makefileType>
+      <item path="DataStructures/stack.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="DataStructures/table.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="DataStructures/table.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="MemManagement.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="SDLInternals.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="game_main.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="stack.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="table.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="table.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

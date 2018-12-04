@@ -2,9 +2,25 @@
 <configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
+      <df name="BackgroundDef">
+        <in>Background.c</in>
+        <in>Background.h</in>
+      </df>
+      <df name="ControllerDef">
+        <in>Controller.c</in>
+        <in>Controller.h</in>
+      </df>
+      <df name="DataStructures">
+        <in>stack.c</in>
+        <in>stack.h</in>
+        <in>table.c</in>
+        <in>table.h</in>
+      </df>
       <df name="gameEx">
       </df>
-      <df name="makerEx">
+      <df name="ImageBankDef">
+        <in>ImageBank.c</in>
+        <in>ImageBank.h</in>
       </df>
       <df name="PlayerDef">
         <in>Frame.c</in>
@@ -18,18 +34,14 @@
       <df name="RoomDef">
         <in>Room.c</in>
         <in>Room.h</in>
+        <in>RoomTileCollection.c</in>
+        <in>RoomTileCollection.h</in>
+        <in>Tile.c</in>
+        <in>Tile.h</in>
       </df>
       <df name="sprites">
       </df>
-      <df name="testEx">
-      </df>
-      <in>Background.c</in>
-      <in>Background.h</in>
       <in>Common.h</in>
-      <in>Controller.c</in>
-      <in>Controller.h</in>
-      <in>ImageBank.c</in>
-      <in>ImageBank.h</in>
       <in>MemManagement.c</in>
       <in>MemManagement.h</in>
       <in>SDLInternals.c</in>
@@ -37,12 +49,6 @@
       <in>Window.c</in>
       <in>Window.h</in>
       <in>game_main.c</in>
-      <in>imageTableTester.c</in>
-      <in>ioTester.c</in>
-      <in>stack.c</in>
-      <in>stack.h</in>
-      <in>table.c</in>
-      <in>table.h</in>
     </df>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>

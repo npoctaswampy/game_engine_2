@@ -1,6 +1,6 @@
-#include "SDLInternals.h"
-#include "Controller.h"
-#include "ImageBank.h"
+#include "../SDLInternals.h"
+#include "../ControllerDef/Controller.h"
+#include "../ImageBankDef/ImageBank.h"
 
 #ifndef WINDOW
 #define WINDOW

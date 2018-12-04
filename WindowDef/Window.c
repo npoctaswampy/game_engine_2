@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Common.h"
+#include "../Common.h"
 #include "Window.h"
 
 void processAndDrawViews(window_p* window, stack* views);

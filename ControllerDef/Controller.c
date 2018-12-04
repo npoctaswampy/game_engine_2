@@ -1,6 +1,6 @@
 #include "Controller.h"
-#include "MemManagement.h"
-#include "SDLInternals.h"
+#include "../MemManagement.h"
+#include "../SDLInternals.h"
 #include <stdlib.h>
 #include <stdio.h>
 

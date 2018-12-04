@@ -1,5 +1,5 @@
-#include "Common.h"
-#include "ImageBank.h"
+#include "../Common.h"
+#include "../ImageBankDef/ImageBank.h"
 
 #ifndef BACKGROUND
 #define BACKGROUND

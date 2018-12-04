@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include "Common.h"
 #include "SDLInternals.h"
-#include "Window.h"
-#include "Controller.h"
+#include "WindowDef/Window.h"
+#include "ControllerDef/Controller.h"
 #include "RoomDef/Room.h"
 #include "PlayerDef/Player.h"
-#include "ImageBank.h"
-#include "Background.h"
+#include "ImageBankDef/ImageBank.h"
+#include "BackgroundDef/Background.h"
 
 typedef struct gamestate_t{
     window_p* window;
