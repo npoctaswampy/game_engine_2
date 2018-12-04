@@ -62,12 +62,14 @@ gamestate_p* initializeSystems(){
 
 void destructGameState(gamestate_p* gameState){
     destructPlayer(gameState->player);
+    destructRoom(gameState->room);
     destructBackground(gameState->background);
     destructController(gameState->controller);
     destructTable(gameState->imageBank);
     teardownSDL(gameState->sdlSystem);
     
     w_free(gameState->player);
+    w_free(gameState->room);
     w_free(gameState->background);
     w_free(gameState->controller);
     w_free(gameState->imageBank);

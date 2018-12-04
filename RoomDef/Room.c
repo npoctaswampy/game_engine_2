@@ -14,7 +14,13 @@ void initRoom(room_p* room, images_p* imageBank){
 }
 
 void destructRoom(room_p* room){
+    int i;
     deleteImage(room->imageBank, room->imageId);
+    for(i = 0; i < LAYERS; i++){
+        destructRoomTileCollection(room->roomTileCollection[i]);
+        w_free(room->roomTileCollection[i]);
+    }
+    w_free(room->roomTileCollection);
 }
 
 stack* getRoomView(room_p* room, int layer, coordinates_p* center){

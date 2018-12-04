@@ -110,33 +110,33 @@ void fillPlayerAnimations(player_p* player){
     
     player->upAnimateIndex = 0;
     player->animations[player->upAnimateIndex] = w_malloc(sizeof(player_animation_p));
-    initAnimation(player->animations[player->upAnimateIndex], 2, player->width, player->height);
+    initAnimation(player->animations[player->upAnimateIndex], 2, player->width, player->height,ANIMSPEED);
     addFrame(player->animations[player->upAnimateIndex], 7, 0, 0);
     addFrame(player->animations[player->upAnimateIndex], 8, 0, 1);
     
     player->downAnimateIndex = 1;
     player->animations[player->downAnimateIndex] = w_malloc(sizeof(player_animation_p));
-    initAnimation(player->animations[player->downAnimateIndex], 2, player->width, player->height);
+    initAnimation(player->animations[player->downAnimateIndex], 2, player->width, player->height,ANIMSPEED);
     addFrame(player->animations[player->downAnimateIndex], 1, 0, 0);
     addFrame(player->animations[player->downAnimateIndex], 2, 0, 1);
     
     player->leftAnimateIndex = 2;
     player->animations[player->leftAnimateIndex] = w_malloc(sizeof(player_animation_p));
-    initAnimation(player->animations[player->leftAnimateIndex], 3, player->width, player->height);
+    initAnimation(player->animations[player->leftAnimateIndex], 3, player->width, player->height,ANIMSPEED);
     addFrame(player->animations[player->leftAnimateIndex], 3, 0, 0);
     addFrame(player->animations[player->leftAnimateIndex], 4, 0, 1);
     addFrame(player->animations[player->leftAnimateIndex], 5, 0, 2);
     
     player->rightAnimateIndex = 3;
     player->animations[player->rightAnimateIndex] = w_malloc(sizeof(player_animation_p));
-    initAnimation(player->animations[player->rightAnimateIndex], 3, player->width, player->height);
+    initAnimation(player->animations[player->rightAnimateIndex], 3, player->width, player->height,ANIMSPEED);
     addFrame(player->animations[player->rightAnimateIndex], 9, 0, 0);
     addFrame(player->animations[player->rightAnimateIndex], 10, 0, 1);
     addFrame(player->animations[player->rightAnimateIndex], 11, 0, 2);
     
     player->idleAnimation = 5;
     player->animations[player->idleAnimation] = w_malloc(sizeof(player_animation_p));
-    initAnimation(player->animations[player->idleAnimation], 1, player->width, player->height);
+    initAnimation(player->animations[player->idleAnimation], 1, player->width, player->height,ANIMSPEED);
     addFrame(player->animations[player->idleAnimation], 0, 0, 0);
     
     player->crntAnimateIndex = player->idleAnimation;

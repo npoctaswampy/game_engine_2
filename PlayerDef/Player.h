@@ -5,6 +5,7 @@
 #ifndef PLAYER
 #define PLAYER
 
+#define ANIMSPEED 4
 
 typedef struct player_t{
     int imageId;

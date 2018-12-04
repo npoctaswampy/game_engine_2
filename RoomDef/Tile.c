@@ -5,7 +5,8 @@ void initTile(tile_p* tile, coordinates_p* coords){
 }
 
 void destructTile(tile_p* tile){
-    w_free(tile->coords);
+    if(tile != NULL)
+        w_free(tile->coords);
 }
 
 coordinates_p* getTileCoords(tile_p* tile){

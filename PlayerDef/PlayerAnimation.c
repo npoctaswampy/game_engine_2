@@ -3,11 +3,13 @@
 #include "PlayerAnimation.h" 
 #include "../Common.h"
 
-void initAnimation(player_animation_p* animation, int numFrames, int columnMult, int rowMult){
+void initAnimation(player_animation_p* animation, int numFrames, int columnMult, int rowMult, int framesPerUpdate){
     animation->numFrames = numFrames;
     animation->currentFrame = 0;
     animation->columnMult = columnMult;
-    animation->rowMult = rowMult;    
+    animation->rowMult = rowMult;
+    animation->framesPerUpdate = framesPerUpdate;
+    animation->framesSinceUpdate = 0;
     animation->frames = w_malloc(numFrames*sizeof(frame_p*));
 }
 
@@ -27,7 +29,9 @@ void addFrame(player_animation_p* animation, int spriteColumn, int spriteRow, in
 }
 
 void updateAnimation(player_animation_p* animation){
-    animation->currentFrame = ((animation->currentFrame)+1)%(animation->numFrames);
+    animation->framesSinceUpdate = ((animation->framesSinceUpdate)+1)%(animation->framesPerUpdate);
+    if(animation->framesSinceUpdate == 0)
+        animation->currentFrame = ((animation->currentFrame)+1)%(animation->numFrames);
 }
 
 frame_p* getCurrentFrame(player_animation_p* animation){
