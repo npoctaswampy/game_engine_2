@@ -3,6 +3,7 @@
 #include "StringDict.h"
 
 int key_from_string(char* string);
+void rehashIfNecessary(StringDict_p* dict);
 
 void initDict(StringDict_p* dict){
 	dict->table = table_construct(DICT_SIZE, LINEAR);
@@ -15,6 +16,7 @@ void destructDict(StringDict_p* dict){
 void insertIntoDict(StringDict_p* dict, char* key, void* value){
 	int id = key_from_string(key);
 	table_insert(dict->table, (hashkey_t) id, value);
+	rehashIfNecessary(dict);
 }
 
 void* deleteFromDict(StringDict_p* dict, char* key){
@@ -25,6 +27,16 @@ void* deleteFromDict(StringDict_p* dict, char* key){
 void* retrieveFromDict(StringDict_p* dict, char* key){
 	int id = key_from_string(key);
 	return table_retrieve(dict->table, (hashkey_t) id);
+}
+
+
+void rehashIfNecessary(StringDict_p* dict){
+	int threshold = dict->table->size / REHASH_DIV;
+	if(dict->table->num_keys > threshold){
+		printf("Rehashing...\n");
+		int newTableSize = dict->table->size*REHASH_MULT;
+		dict->table = table_rehash(dict->table, newTableSize);
+	}
 }
 
 

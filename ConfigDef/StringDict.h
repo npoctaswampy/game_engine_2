@@ -3,7 +3,9 @@
 #ifndef STRINGDICT
 #define STRINGDICT
 
-#define DICT_SIZE 100
+#define REHASH_DIV 2
+#define REHASH_MULT 3
+#define DICT_SIZE 10
 
 typedef struct StringDict_t {
 	table_t* table;

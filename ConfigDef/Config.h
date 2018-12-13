@@ -3,7 +3,7 @@
 #ifndef CONFIG
 #define CONFIG
 
-#define BUFFLEN 100
+#define BUFFLEN 30
 
 typedef enum{NONE,KEY,VALUE} valType;
 
