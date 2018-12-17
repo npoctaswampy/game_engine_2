@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Config.h"
+#include "LinkedList.h"
 
 void loadPlainText(Config_p* config, char* fileName);
 char* processKey(FILE* fp);
@@ -10,6 +11,8 @@ int* getNextInt(FILE* fp);
 StringDict_p* getNextDict(FILE* fp);
 char peekAtNextChar(FILE* fp);
 char getNextDivider(FILE* fp);
+void fastForwardTo(char val,FILE* fp);
+void* getNextArray(FILE* fp);
 
 
 void initConfig(Config_p* config){
@@ -33,33 +36,28 @@ void loadPlainText(Config_p* config, char* fileName){
 }	
 
 char* processKey(FILE* fp){
-	char current = fgetc(fp);
-
-	while(current != '"' && !feof(fp)) 
-		current = fgetc(fp);
+	fastForwardTo('"',fp);
 
 	char* key = getNextString(fp);
 	return key;
 }
 
 void* processObject(FILE* fp){
-	char current = fgetc(fp);
 	void* val = NULL;	
 	
-	while(current != ':' && !feof(fp))
-		current = fgetc(fp);
-
-	current = peekAtNextChar(fp);
+	fastForwardTo(':',fp);
+	char current = peekAtNextChar(fp);
 
 	if(current == '"'){
 		current = fgetc(fp);	
 		val = (void*) getNextString(fp);
 	}
-
 	if(current >= '0' && current <= '9')
 		val = (void*) getNextInt(fp);
 	if(current == '{')
 		val = (void*) getNextDict(fp);
+	if(current == '[')
+		val = (void*) getNextArray(fp);
 
 	return val;
 }
@@ -80,6 +78,22 @@ StringDict_p* getNextDict(FILE* fp){
 	}
 
 	return dict;
+}
+
+void* getNextArray(FILE* fp){
+	void* object;
+	char current = peekAtNextChar(fp);
+
+	LinkedList_p* list = malloc(sizeof(LinkedList_p));
+	initLinkedList(list);
+
+	while(current != ']' && !feof(fp)){
+		object = getNextDict(fp);
+		insertAtTail(list, object);
+		current = getNextDivider(fp);
+	}
+
+	return list;
 }
 
 char* getNextString(FILE* fp){
@@ -125,10 +139,16 @@ char peekAtNextChar(FILE* fp){
 
 char getNextDivider(FILE* fp){
 	char current = fgetc(fp);
-	while(current != ',' && current != '}' && !feof(fp)){
+	while(current != ',' && current != '}' && current !=']' && !feof(fp)){
 		current = fgetc(fp);
 	}
 	return current;
+}
+
+void fastForwardTo(char val,FILE* fp){
+	char current = fgetc(fp);
+	while(current != val && !feof(fp))
+		current = fgetc(fp);
 }
 
 

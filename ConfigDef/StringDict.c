@@ -33,7 +33,6 @@ void* retrieveFromDict(StringDict_p* dict, char* key){
 void rehashIfNecessary(StringDict_p* dict){
 	int threshold = dict->table->size / REHASH_DIV;
 	if(dict->table->num_keys > threshold){
-		printf("Rehashing...\n");
 		int newTableSize = dict->table->size*REHASH_MULT;
 		dict->table = table_rehash(dict->table, newTableSize);
 	}
