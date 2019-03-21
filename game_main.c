@@ -8,6 +8,7 @@
 #include "PlayerDef/Player.h"
 #include "ImageBankDef/ImageBank.h"
 #include "BackgroundDef/Background.h"
+#include "ConfigDef/Config.h"
 
 typedef struct gamestate_t{
     window_p* window;
@@ -17,12 +18,14 @@ typedef struct gamestate_t{
     player_p* player;
     background_p* background;
     room_p* room;
+    config_p* config;
 }gamestate_p;
 
 void runGame(gamestate_p* gameState);
 gamestate_p* initializeSystems();
 images_p* buildImageBank();
 sdl_p* buildSdlSystem();
+config_p* buildConfig(char* configFile);
 room_p* buildRoom(images_p* imageBank);
 player_p* buildPlayer(images_p* imageBank);
 background_p* buildBackground(images_p* imageBank);
@@ -88,6 +91,13 @@ sdl_p* buildSdlSystem(){
     sdl_p* sdlSystem = (sdl_p*) w_malloc(sizeof(sdl_p));
     initializeSDL(sdlSystem);
     return sdlSystem;
+}
+
+config_p* buildConfig(char* configFile){
+    config_p* config = malloc(sizeof(config_p));
+    initConfig(config);
+    buildConfigFromFile(config, configFile, 0);
+    return config;
 }
 
 room_p* buildRoom(images_p* imageBank){

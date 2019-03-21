@@ -1,18 +1,18 @@
-#include "StringDict.h"
+#include "../DataStructures/StringDict.h"
 
 #ifndef CONFIG
 #define CONFIG
 
 #define BUFFLEN 30
 
-typedef enum{NONE,KEY,VALUE} valType;
+typedef enum{INT,STRING,ARRAY,DICT} dictTypes;
 
 typedef struct Config_t{
 	StringDict_p* dict; 
-}Config_p;
+}config_p;
 
-void initConfig(Config_p* config);
-void destructFileReader(Config_p* config);
-void buildConfigFromFile(Config_p* config, char* fileName, int binary);
+void initConfig(config_p* config);
+void destructConfig(config_p* config);
+void buildConfigFromFile(config_p* config, char* fileName, int binary);
 
 #endif

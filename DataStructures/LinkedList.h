@@ -15,6 +15,7 @@ typedef struct LinkedList_t{
 
 void initLinkedList(LinkedList_p* list);
 void destructLinkedList(LinkedList_p* list);
+void destructLinkedListAndData(LinkedList_p* list);
 void insertAtTail(LinkedList_p* list, void* data);
 void insertAtHead(LinkedList_p* list, void* data);
 LinkedListNode_p* getHeadLLNode(LinkedList_p* list);

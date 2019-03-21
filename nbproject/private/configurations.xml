@@ -6,11 +6,19 @@
         <in>Background.c</in>
         <in>Background.h</in>
       </df>
+      <df name="ConfigDef">
+        <in>Config.c</in>
+        <in>Config.h</in>
+      </df>
       <df name="ControllerDef">
         <in>Controller.c</in>
         <in>Controller.h</in>
       </df>
       <df name="DataStructures">
+        <in>LinkedList.c</in>
+        <in>LinkedList.h</in>
+        <in>StringDict.c</in>
+        <in>StringDict.h</in>
         <in>stack.c</in>
         <in>stack.h</in>
         <in>table.c</in>
@@ -41,13 +49,15 @@
       </df>
       <df name="sprites">
       </df>
+      <df name="WindowDef">
+        <in>Window.c</in>
+        <in>Window.h</in>
+      </df>
       <in>Common.h</in>
       <in>MemManagement.c</in>
       <in>MemManagement.h</in>
       <in>SDLInternals.c</in>
       <in>SDLInternals.h</in>
-      <in>Window.c</in>
-      <in>Window.h</in>
       <in>game_main.c</in>
     </df>
   </logicalFolder>

@@ -7,26 +7,31 @@ void rehashIfNecessary(StringDict_p* dict);
 
 void initDict(StringDict_p* dict){
 	dict->table = table_construct(DICT_SIZE, LINEAR);
+	dict->keys = malloc(sizeof(LinkedList_p));
+	initLinkedList(dict->keys);
 }
 
 void destructDict(StringDict_p* dict){
 	table_destruct(dict->table);
+	destructLinkedListAndData(dict->keys);
+	free(dict->keys);
 }
 
-void insertIntoDict(StringDict_p* dict, char* key, void* value){
+void insertIntoDict(StringDict_p* dict, char* key, sdNode_p* value){
 	int id = key_from_string(key);
 	table_insert(dict->table, (hashkey_t) id, value);
+	insertAtTail(dict->keys, key);
 	rehashIfNecessary(dict);
 }
 
-void* deleteFromDict(StringDict_p* dict, char* key){
+sdNode_p* deleteFromDict(StringDict_p* dict, char* key){
 	int id = key_from_string(key);
-	return table_delete(dict->table, (hashkey_t) id);
+	return (sdNode_p*) table_delete(dict->table, (hashkey_t) id);
 }
 
-void* retrieveFromDict(StringDict_p* dict, char* key){
+sdNode_p* retrieveFromDict(StringDict_p* dict, char* key){
 	int id = key_from_string(key);
-	return table_retrieve(dict->table, (hashkey_t) id);
+	return (sdNode_p*) table_retrieve(dict->table, (hashkey_t) id);
 }
 
 

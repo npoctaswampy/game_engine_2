@@ -1,48 +1,88 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Config.h"
 #include "LinkedList.h"
 
-void loadPlainText(Config_p* config, char* fileName);
+void loadPlainText(config_p* config, char* fileName);
 char* processKey(FILE* fp);
-char* getNextString(FILE* fp);
-void* processObject(FILE* fp);
-int* getNextInt(FILE* fp);
-StringDict_p* getNextDict(FILE* fp);
+sdNode_p* getNextString(FILE* fp);
+sdNode_p* processObject(FILE* fp);
+sdNode_p* getNextInt(FILE* fp);
+sdNode_p* getNextDict(FILE* fp);
 char peekAtNextChar(FILE* fp);
 char getNextDivider(FILE* fp);
 void fastForwardTo(char val,FILE* fp);
-void* getNextArray(FILE* fp);
+sdNode_p* getNextArray(FILE* fp);
+void destructConfDict(StringDict_p* dict);
+void destructConfLinkedList(LinkedList_p* ll);
 
 
-void initConfig(Config_p* config){
+void initConfig(config_p* config){
 	config->dict = NULL;
 }
 
-void destructFileReader(Config_p* config){
-	destructDict(config->dict);
+void destructConfig(config_p* config){
+	destructConfDict(config->dict);
+	free(config->dict);
+	free(config);
+}
+	
+void destructConfDict(StringDict_p* dict){
+	LinkedList_p* keys = dict->keys;
+	LinkedListNode_p* currentNode = getHeadLLNode(keys);
+	sdNode_p* node = NULL;
+	char* key = NULL;
+	do{
+		key = (char*) getDataFromLLNode(currentNode);
+		node = retrieveFromDict(dict,key);
+		if(strcmp(node->type,"Dict") == 0) destructConfDict(node->data);
+		if(strcmp(node->type,"Array") == 0) destructConfLinkedList(node->data);
+		free(node->data);
+		free(node);
+	}while((currentNode = getNextLLNode(currentNode)) != NULL);
+	destructDict(dict);
 }
 
-void buildConfigFromFile(Config_p* config, char* fileName, int binary){
+void destructConfLinkedList(LinkedList_p* ll){
+	LinkedListNode_p* currentNode = getHeadLLNode(ll);
+	sdNode_p* node = NULL;
+	do{
+		node = getDataFromLLNode(currentNode);
+		if(strcmp(node->type,"Dict") == 0) destructConfDict(node->data);
+		if(strcmp(node->type,"Array") == 0) destructConfLinkedList(node->data);
+		free(node->data);
+		free(node);
+	}while((currentNode = getNextLLNode(currentNode)) != NULL);
+	destructLinkedList(ll);
+}
+
+void buildConfigFromFile(config_p* config, char* fileName, int binary){
 	if(binary == 0) loadPlainText(config, fileName);
 }
 
-void loadPlainText(Config_p* config, char* fileName){
+void loadPlainText(config_p* config, char* fileName){
 	FILE* fp = fopen(fileName,"r");
 
-	config->dict = getNextDict(fp); 
+	sdNode_p* dictNode = getNextDict(fp);
+	config->dict = dictNode->data;
+
+	free(dictNode); 
 	
 	fclose(fp);
 }	
 
 char* processKey(FILE* fp){
 	fastForwardTo('"',fp);
+	sdNode_p* keyNode = getNextString(fp);
 
-	char* key = getNextString(fp);
+	char* key = keyNode->data;
+
+	free(keyNode);
 	return key;
 }
 
-void* processObject(FILE* fp){
+sdNode_p* processObject(FILE* fp){
 	void* val = NULL;	
 	
 	fastForwardTo(':',fp);
@@ -53,16 +93,16 @@ void* processObject(FILE* fp){
 		val = (void*) getNextString(fp);
 	}
 	if(current >= '0' && current <= '9')
-		val = (void*) getNextInt(fp);
+		val = getNextInt(fp);
 	if(current == '{')
-		val = (void*) getNextDict(fp);
+		val = getNextDict(fp);
 	if(current == '[')
-		val = (void*) getNextArray(fp);
+		val = getNextArray(fp);
 
 	return val;
 }
 
-StringDict_p* getNextDict(FILE* fp){
+sdNode_p* getNextDict(FILE* fp){
 	char* key;
 	void* object;
 	char current = peekAtNextChar(fp);	
@@ -77,10 +117,14 @@ StringDict_p* getNextDict(FILE* fp){
 		current = getNextDivider(fp);
 	}
 
-	return dict;
+	sdNode_p* node = malloc(sizeof(sdNode_p));
+	node->type = "Dict";
+	node->data = dict;
+
+	return node;
 }
 
-void* getNextArray(FILE* fp){
+sdNode_p* getNextArray(FILE* fp){
 	void* object;
 	char current = peekAtNextChar(fp);
 
@@ -93,10 +137,14 @@ void* getNextArray(FILE* fp){
 		current = getNextDivider(fp);
 	}
 
-	return list;
+	sdNode_p* node = malloc(sizeof(sdNode_p));
+	node->type = "Array";
+	node->data = list;
+
+	return node;
 }
 
-char* getNextString(FILE* fp){
+sdNode_p* getNextString(FILE* fp){
 	char* buffer = malloc(sizeof(char)*BUFFLEN);
 	char current = fgetc(fp);
 	
@@ -109,10 +157,14 @@ char* getNextString(FILE* fp){
 
 	buffer[i] = '\0';
 
-	return buffer;
+	sdNode_p* node = malloc(sizeof(sdNode_p));
+	node->type = "String";
+	node->data = buffer;
+
+	return node;
 }
 
-int* getNextInt(FILE* fp){
+sdNode_p* getNextInt(FILE* fp){
 	char* buffer = malloc(sizeof(char)*BUFFLEN);
 	int* ret = malloc(sizeof(int));
 
@@ -128,7 +180,13 @@ int* getNextInt(FILE* fp){
 	buffer[i] = '\0';
 	*ret = atoi(buffer);
 
-	return ret;
+	free(buffer);
+
+	sdNode_p* node = malloc(sizeof(sdNode_p));
+	node->type = "Integer";
+	node->data = ret;
+
+	return node;
 }
 
 char peekAtNextChar(FILE* fp){
@@ -150,7 +208,6 @@ void fastForwardTo(char val,FILE* fp){
 	while(current != val && !feof(fp))
 		current = fgetc(fp);
 }
-
 
 
 

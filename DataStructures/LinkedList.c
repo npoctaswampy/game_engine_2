@@ -13,9 +13,19 @@ void initLinkedList(LinkedList_p* list){
 void destructLinkedList(LinkedList_p* list){
 	LinkedListNode_p* nextNode = NULL;
 	LinkedListNode_p* currentNode = getHeadLLNode(list);
-	void* data = NULL;
 	do{
 		nextNode = getNextLLNode(currentNode);
+		free(currentNode);
+		currentNode = nextNode;
+	}while(nextNode != NULL);
+}
+
+void destructLinkedListAndData(LinkedList_p* list){
+	LinkedListNode_p* nextNode = NULL;
+	LinkedListNode_p* currentNode = getHeadLLNode(list);
+	do{
+		nextNode = getNextLLNode(currentNode);
+		free(currentNode->data);
 		free(currentNode);
 		currentNode = nextNode;
 	}while(nextNode != NULL);
