@@ -19,6 +19,7 @@ typedef struct room_t{
     coordinates_p* focus;          
 }room_p;
 
+room_p* buildRoom(images_p* imageBank);
 void initRoom(room_p* room, images_p* imageBank);
 void destructRoom(room_p* room);
 stack* getRoomView(room_p* room, int layer, coordinates_p* center);

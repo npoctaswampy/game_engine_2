@@ -17,6 +17,12 @@ void updatePlayerLocation(player_p* player,int k);
 
 /*Public Function Declarations*/
 
+player_p* buildPlayer(images_p* imageBank){
+    player_p* player = w_malloc(sizeof(player_p));
+    initPlayer(player, imageBank);
+    return player;    
+}
+
 void initPlayer(player_p* player, images_p* imageBank){
     player->imageBank = imageBank;
     player->imageId = saveImage(player->imageBank, getPlayerSpriteFileName());

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Config.h"
-#include "LinkedList.h"
+#include "../DataStructures/LinkedList.h"
 
 void loadPlainText(config_p* config, char* fileName);
 char* processKey(FILE* fp);

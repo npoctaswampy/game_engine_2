@@ -1,4 +1,4 @@
-#include "table.h"
+#include "../Common.h"
 
 #ifndef STRINGDICT
 #define STRINGDICT

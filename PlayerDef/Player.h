@@ -25,6 +25,7 @@ typedef struct player_t{
     int idleAnimation;
 }player_p;
 
+player_p* buildPlayer(images_p* imageBank);
 void initPlayer(player_p* player, images_p* imageBank);
 void destructPlayer(player_p* player);
 stack* getPlayerView(player_p* player, int layer);

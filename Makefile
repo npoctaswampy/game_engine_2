@@ -3,12 +3,12 @@ LIBS=-lm `sdl2-config --libs` -lpthread
 OBJS=game_main.o particle.o background.o resources.o
 CC=gcc
 
-BIN = game game_main.o Window.o Controller.o Player_game.o Room.o Background.o ImageBank.o SDLInternals.o stack.o MemManagement.o PlayerAnimation.o Frame.o RoomTileCollection.o Tile.o clean
+BIN = game game_main.o Window.o Controller.o Config.o Player_game.o Room.o Background.o ImageBank.o SDLInternals.o stack.o MemManagement.o PlayerAnimation.o Frame.o RoomTileCollection.o Tile.o StringDict.o LinkedList.o clean
 
 all: $(BIN)
 
-game: game_main.o stack.o SDLInternals.o MemManagement.o Window.o Controller.o Player_game.o Room.o Background.o ImageBank.o table.o PlayerAnimation.o Frame.o RoomTileCollection.o Tile.o
-	$(CC) $(CFLAGS) game_main.o stack.o SDLInternals.o MemManagement.o Window.o Controller.o Player_game.o Room.o Background.o ImageBank.o table.o PlayerAnimation.o Frame.o RoomTileCollection.o Tile.o -o ./gameEx/game $(LIBS)
+game: game_main.o stack.o SDLInternals.o MemManagement.o Window.o Controller.o Config.o Player_game.o Room.o Background.o ImageBank.o table.o PlayerAnimation.o Frame.o RoomTileCollection.o Tile.o StringDict.o LinkedList.o
+	$(CC) $(CFLAGS) game_main.o stack.o SDLInternals.o MemManagement.o Window.o Controller.o Config.o Player_game.o Room.o Background.o ImageBank.o table.o PlayerAnimation.o Frame.o RoomTileCollection.o Tile.o StringDict.o LinkedList.o -o ./gameEx/game $(LIBS)
 		
 game_main.o: game_main.c SDLInternals.h MemManagement.h WindowDef/Window.h ControllerDef/Controller.h PlayerDef/Player.h ImageBankDef/ImageBank.h Common.h
 	$(CC) $(CFLAGS) -c game_main.c $(LIBS)
@@ -18,7 +18,10 @@ Window.o: WindowDef/Window.c ControllerDef/Controller.h SDLInternals.h ImageBank
 	
 Controller.o: ControllerDef/Controller.h MemManagement.h Common.h PlayerDef/Player.h RoomDef/Room.h BackgroundDef/Background.h
 	$(CC) $(CFLAGS) -c ControllerDef/Controller.c $(LIBS)
-
+	
+Config.o: ConfigDef/Config.h DataStructures/StringDict.h DataStructures/table.h DataStructures/LinkedList.h
+	$(CC) $(CFLAGS) -c ConfigDef/Config.c -o Config.o $(LIBS)
+	
 Player_game.o: PlayerDef/Player.h Common.h ImageBankDef/ImageBank.h PlayerDef/PlayerAnimation.h PlayerDef/Frame.h
 	$(CC) $(CFLAGS) -c PlayerDef/Player.c -o Player_game.o $(LIBS)
 	
@@ -45,6 +48,12 @@ Frame.o: PlayerDef/Frame.c PlayerDef/Frame.h
 
 Tile.o: RoomDef/Tile.c RoomDef/Tile.h Common.h
 	$(CC) $(CFLAGS) -c RoomDef/Tile.c
+
+StringDict.o: DataStructures/StringDict.c DataStructures/StringDict.h Common.h
+	$(CC) $(CFLAGS) -c DataStructures/StringDict.c
+	
+LinkedList.o: DataStructures/LinkedList.c DataStructures/LinkedList.h Common.h
+	$(CC) $(CFLAGS) -c DataStructures/LinkedList.c
 	
 stack.o: DataStructures/stack.c DataStructures/stack.h MemManagement.h
 	$(CC) $(CFLAGS) -c DataStructures/stack.c

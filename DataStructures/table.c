@@ -20,7 +20,7 @@ int open_addressing_find(table_t* T, hashkey_t key, int* ret_val);
 data_t chain_find(table_t* T, hashkey_t key, int delete);
 data_t open_find(table_t* T, hashkey_t key,int delete);
 data_t deletion_routine(table_t* T, int place);
-int set_place(int place, hashkey_t key, table_t* T, int decrement_val);
+int set_place(int place, table_t* T, int decrement_val);
 data_t retrieval_routine(table_t* T, int place);
 int find_decrement(table_t* T,hashkey_t key);
 
@@ -225,7 +225,7 @@ int open_addressing_find(table_t* T, hashkey_t key, int* ret_val)
 			*ret_val=1; /*Finds duplicates if no deleted keys*/
 			return place;
 		}
-		place=set_place(place, key, T, decrement_val);/*decrements*/
+		place=set_place(place, T, decrement_val);/*decrements*/
 		T->probe_count_recent++;
 		if(place==initplace){ /*protects against infinite loops*/
 			return -2;    /*If not full, and returns to initplace*/
@@ -330,7 +330,7 @@ data_t open_find(table_t* T, hashkey_t key, int delete)
 	T->probe_count_recent++;
 	while(((T->table)+place)->K!=key || ((T->table)+place)->deleted==1){
 		if(((T->table)+place)->K==K_e) return ret;
-		place=set_place(place, key, T, decrement_val);
+		place=set_place(place, T, decrement_val);
 		if(place==initplace) break;
 		T->probe_count_recent++;
 	}
@@ -397,7 +397,7 @@ hashkey_t table_peek(table_t* T, int index, int list_position)
 
 /*Used to decrement a position in a hashtable. Returns the 
 offset that is used to find the location*/
-int set_place(int place, hashkey_t key, table_t* T, int decrement_val)
+int set_place(int place, table_t* T, int decrement_val)
 {
 	if((place-decrement_val)>=0) place= place-decrement_val;
 	else place=(T->size+(place-decrement_val));

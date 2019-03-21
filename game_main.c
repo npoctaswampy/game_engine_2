@@ -26,14 +26,12 @@ gamestate_p* initializeSystems();
 images_p* buildImageBank();
 sdl_p* buildSdlSystem();
 config_p* buildConfig(char* configFile);
-room_p* buildRoom(images_p* imageBank);
-player_p* buildPlayer(images_p* imageBank);
 background_p* buildBackground(images_p* imageBank);
 controller_p* buildController(player_p* player, room_p* room, sdl_p* sdlSystem, background_p* background);
 window_p* buildWindow(sdl_p* sdlSystem, controller_p* controller, images_p* imageBank);
 void destructGameState(gamestate_p* gameState);
 
-int main(){
+int main(int argc, char* argv[]){
     gamestate_p* gameState = initializeSystems();
     runGame(gameState);
     destructGameState(gameState);
@@ -98,18 +96,6 @@ config_p* buildConfig(char* configFile){
     initConfig(config);
     buildConfigFromFile(config, configFile, 0);
     return config;
-}
-
-room_p* buildRoom(images_p* imageBank){
-    room_p* room = w_malloc(sizeof(room_p*));
-    initRoom(room, imageBank);
-    return room;
-}
-
-player_p* buildPlayer(images_p* imageBank){
-    player_p* player = w_malloc(sizeof(player_p));
-    initPlayer(player, imageBank);
-    return player;    
 }
 
 background_p* buildBackground(images_p* imageBank){

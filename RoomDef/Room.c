@@ -6,6 +6,12 @@ viewParams_p getViewParams(coordinates_p* center, room_p* room, int layer);
 void updateScreenLocation(coordinates_p* coords, coordinates_p* center);
 void initRoomTileCollections(room_p* room);
 
+room_p* buildRoom(images_p* imageBank){
+    room_p* room = w_malloc(sizeof(room_p*));
+    initRoom(room, imageBank);
+    return room;
+}
+
 void initRoom(room_p* room, images_p* imageBank){
     room->imageBank = imageBank;
     room->imageId = saveImage(room->imageBank, getRoomSpriteFileName());
