@@ -1,0 +1,4 @@
+{
+"room_height":10,
+"room_width":10
+}

@@ -22,7 +22,7 @@ typedef struct gamestate_t{
 }gamestate_p;
 
 void runGame(gamestate_p* gameState);
-gamestate_p* initializeSystems();
+gamestate_p* initializeSystems(char* configFile);
 images_p* buildImageBank();
 sdl_p* buildSdlSystem();
 config_p* buildConfig(char* configFile);
@@ -30,12 +30,18 @@ background_p* buildBackground(images_p* imageBank);
 controller_p* buildController(player_p* player, room_p* room, sdl_p* sdlSystem, background_p* background);
 window_p* buildWindow(sdl_p* sdlSystem, controller_p* controller, images_p* imageBank);
 void destructGameState(gamestate_p* gameState);
+gamestate_p* evaluateGameState(gamestate_p* gameState);
 
 int main(int argc, char* argv[]){
-    gamestate_p* gameState = initializeSystems();
-    runGame(gameState);
-    destructGameState(gameState);
-    exit(0);
+    if(argc > 1){
+        gamestate_p* gameState = initializeSystems(argv[1]);
+        runGame(gameState);
+        destructGameState(gameState);
+        exit(0);
+    }else{
+        printf("No config file specified. Exiting...\n");
+        return 0;
+    }
 }
 
 void runGame(gamestate_p* gameState){
@@ -47,17 +53,30 @@ void runGame(gamestate_p* gameState){
     }
 }
 
-gamestate_p* initializeSystems(){
+gamestate_p* initializeSystems(char* configFile){
     gamestate_p* gameState = w_malloc(sizeof(gamestate_p));
     
     gameState->imageBank = buildImageBank();
+    gameState->config = buildConfig(configFile);
     gameState->sdlSystem = buildSdlSystem(gameState->imageBank);
     gameState->player = buildPlayer(gameState->imageBank);
-    gameState->room = buildRoom(gameState->imageBank);
+    gameState->room = buildRoom(gameState->imageBank, gameState->config);
     gameState->background = buildBackground(gameState->imageBank);
     gameState->controller = buildController(gameState->player, gameState->room, gameState->sdlSystem, gameState->background);
     gameState->window = buildWindow(gameState->sdlSystem, gameState->controller, gameState->imageBank);
     
+    return evaluateGameState(gameState);
+}
+
+gamestate_p* evaluateGameState(gamestate_p* gameState){
+    if(gameState->config->dict == NULL) return NULL;
+    if(gameState->imageBank == NULL) return NULL;
+    if(gameState->sdlSystem == NULL) return NULL;
+    if(gameState->player == NULL) return NULL;
+    if(gameState->room == NULL) return NULL;
+    if(gameState->background == NULL) return NULL;
+    if(gameState->controller == NULL) return NULL;
+    if(gameState->window == NULL) return NULL;
     return gameState;
 }
 
@@ -67,6 +86,7 @@ void destructGameState(gamestate_p* gameState){
     destructBackground(gameState->background);
     destructController(gameState->controller);
     destructTable(gameState->imageBank);
+    destructConfig(gameState->config);
     teardownSDL(gameState->sdlSystem);
     
     w_free(gameState->player);

@@ -6,13 +6,21 @@ viewParams_p getViewParams(coordinates_p* center, room_p* room, int layer);
 void updateScreenLocation(coordinates_p* coords, coordinates_p* center);
 void initRoomTileCollections(room_p* room);
 
-room_p* buildRoom(images_p* imageBank){
-    room_p* room = w_malloc(sizeof(room_p*));
-    initRoom(room, imageBank);
-    return room;
+room_p* buildRoom(images_p* imageBank,config_p* config){ 
+    char* roomConfigFile = (char*) (retrieveFromDict(config->dict, "roomConfigFile"))->data;
+    if(roomConfigFile != NULL){
+        room_p* room = w_malloc(sizeof(room_p*));
+        initRoom(room, imageBank, roomConfigFile);
+        return room;
+    }else{
+        return NULL;
+    }
 }
 
-void initRoom(room_p* room, images_p* imageBank){
+void initRoom(room_p* room, images_p* imageBank, char* configFile){
+    room->roomConf = (config_p*) malloc(sizeof(config_p));
+    initConfig(room->roomConf);
+    buildConfigFromFile(room->roomConf, configFile, 0);
     room->imageBank = imageBank;
     room->imageId = saveImage(room->imageBank, getRoomSpriteFileName());
     initRoomTileCollections(room);
@@ -82,10 +90,13 @@ char* getRoomSpriteFileName(){
 
 void initRoomTileCollections(room_p* room){
     int i;
+    int roomH, roomW;
     room->roomTileCollection = w_malloc(LAYERS*sizeof(rtc_p*));
     for(i = 0; i < LAYERS; i++){
         room->roomTileCollection[i] = w_malloc(sizeof(rtc_p));
-        initRoomTileCollection(room->roomTileCollection[i], 100, 100);
+        roomH = *((int*) (retrieveFromDict(room->roomConf->dict, "room_height"))->data);
+        roomW = *((int*) (retrieveFromDict(room->roomConf->dict, "room_width"))->data);
+        initRoomTileCollection(room->roomTileCollection[i], roomW, roomH);
     }
 }
 

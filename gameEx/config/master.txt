@@ -1,0 +1,3 @@
+{
+"roomConfigFile":"config/rooms/test_room1.txt"
+}

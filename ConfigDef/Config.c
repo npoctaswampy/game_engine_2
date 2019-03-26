@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "Config.h"
 #include "../DataStructures/LinkedList.h"
 
@@ -19,7 +20,6 @@ void destructConfLinkedList(LinkedList_p* ll);
 
 
 void initConfig(config_p* config){
-	config->dict = NULL;
 }
 
 void destructConfig(config_p* config){
@@ -62,14 +62,16 @@ void buildConfigFromFile(config_p* config, char* fileName, int binary){
 }
 
 void loadPlainText(config_p* config, char* fileName){
-	FILE* fp = fopen(fileName,"r");
-
-	sdNode_p* dictNode = getNextDict(fp);
-	config->dict = dictNode->data;
-
-	free(dictNode); 
-	
-	fclose(fp);
+    FILE* fp; 
+    printf("Loading config...\n");
+    
+    if(access(fileName, F_OK) != -1){
+        fp = fopen(fileName,"r");
+        sdNode_p* dictNode = getNextDict(fp);
+        config->dict = dictNode->data;
+        free(dictNode); 
+        fclose(fp);
+    }
 }	
 
 char* processKey(FILE* fp){
@@ -103,25 +105,26 @@ sdNode_p* processObject(FILE* fp){
 }
 
 sdNode_p* getNextDict(FILE* fp){
-	char* key;
-	void* object;
-	char current = peekAtNextChar(fp);	
+    printf("Processing dict...\n");
+    char* key;
+    void* object;
+    char current = peekAtNextChar(fp);	
 
-	StringDict_p* dict = malloc(sizeof(StringDict_p));
-	initDict(dict); 
+    StringDict_p* dict = malloc(sizeof(StringDict_p));
+    initDict(dict); 
 
-	while(current != '}' && !feof(fp)){
-		key = processKey(fp);
-		object = processObject(fp);
-		insertIntoDict(dict, key, object);
-		current = getNextDivider(fp);
-	}
+    while(current != '}' && !feof(fp)){
+            key = processKey(fp);
+            object = processObject(fp);
+            insertIntoDict(dict, key, object);
+            current = getNextDivider(fp);
+    }
 
-	sdNode_p* node = malloc(sizeof(sdNode_p));
-	node->type = "Dict";
-	node->data = dict;
+    sdNode_p* node = (sdNode_p*) malloc(sizeof(sdNode_p));
+    node->type = "Dict";
+    node->data = dict;
 
-	return node;
+    return node;
 }
 
 sdNode_p* getNextArray(FILE* fp){
@@ -145,48 +148,51 @@ sdNode_p* getNextArray(FILE* fp){
 }
 
 sdNode_p* getNextString(FILE* fp){
-	char* buffer = malloc(sizeof(char)*BUFFLEN);
-	char current = fgetc(fp);
-	
-	int i = 0;
-	do{
-		buffer[i] = current;
-		i++;
-		current = fgetc(fp);
-	}while(current != '"' && !feof(fp));
+    char* buffer = malloc(sizeof(char)*BUFFLEN);
+    char current = fgetc(fp);
 
-	buffer[i] = '\0';
+    int i = 0;
+    do{
+            buffer[i] = current;
+            i++;
+            current = fgetc(fp);
+    }while(current != '"' && !feof(fp));
 
-	sdNode_p* node = malloc(sizeof(sdNode_p));
-	node->type = "String";
-	node->data = buffer;
+    buffer[i] = '\0';
+    printf("Processing String %s\n",buffer);
 
-	return node;
+    sdNode_p* node = malloc(sizeof(sdNode_p));
+    node->type = "String";
+    node->data = buffer;
+
+    return node;
 }
 
 sdNode_p* getNextInt(FILE* fp){
-	char* buffer = malloc(sizeof(char)*BUFFLEN);
-	int* ret = malloc(sizeof(int));
+    char* buffer = malloc(sizeof(char)*BUFFLEN);
+    int* ret = malloc(sizeof(int));
 
-	int i = 0;
-	char current = fgetc(fp);
+    int i = 0;
+    char current = fgetc(fp);
 
-	while(peekAtNextChar(fp) != ',' && peekAtNextChar(fp) != '}' && !feof(fp)){
-		buffer[i] = current;
-		i++;
-		current = fgetc(fp);
-	};
+    do{
+            buffer[i] = current;
+            i++;
+            current = fgetc(fp);
+    }while(current != ',' && current != '}' && !feof(fp));
+    ungetc(current, fp);
 
-	buffer[i] = '\0';
-	*ret = atoi(buffer);
+    buffer[i] = '\0';
+    *ret = atoi(buffer);
+    printf("Processing Int %d\n",*ret);
 
-	free(buffer);
+    free(buffer);
 
-	sdNode_p* node = malloc(sizeof(sdNode_p));
-	node->type = "Integer";
-	node->data = ret;
+    sdNode_p* node = malloc(sizeof(sdNode_p));
+    node->type = "Integer";
+    node->data = ret;
 
-	return node;
+    return node;
 }
 
 char peekAtNextChar(FILE* fp){
