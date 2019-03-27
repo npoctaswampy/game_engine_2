@@ -18,6 +18,7 @@ room_p* buildRoom(images_p* imageBank,config_p* config){
 }
 
 void initRoom(room_p* room, images_p* imageBank, char* configFile){
+    room->roomConf = NULL;
     room->roomConf = (config_p*) malloc(sizeof(config_p));
     initConfig(room->roomConf);
     buildConfigFromFile(room->roomConf, configFile, 0);

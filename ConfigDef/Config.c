@@ -121,7 +121,8 @@ sdNode_p* getNextDict(FILE* fp){
     }
 
     sdNode_p* node = (sdNode_p*) malloc(sizeof(sdNode_p));
-    node->type = "Dict";
+    node->type = malloc(BUFFLEN*sizeof(char)); 
+    strcpy(node->type,"Dict");
     node->data = dict;
 
     return node;
@@ -141,7 +142,8 @@ sdNode_p* getNextArray(FILE* fp){
 	}
 
 	sdNode_p* node = malloc(sizeof(sdNode_p));
-	node->type = "Array";
+        node->type = malloc(BUFFLEN*sizeof(char)); 
+        strcpy(node->type,"Array");
 	node->data = list;
 
 	return node;
@@ -162,7 +164,8 @@ sdNode_p* getNextString(FILE* fp){
     printf("Processing String %s\n",buffer);
 
     sdNode_p* node = malloc(sizeof(sdNode_p));
-    node->type = "String";
+    node->type = malloc(BUFFLEN*sizeof(char)); 
+    strcpy(node->type,"String");
     node->data = buffer;
 
     return node;
@@ -189,7 +192,8 @@ sdNode_p* getNextInt(FILE* fp){
     free(buffer);
 
     sdNode_p* node = malloc(sizeof(sdNode_p));
-    node->type = "Integer";
+    node->type = malloc(BUFFLEN*sizeof(char)); 
+    strcpy(node->type,"Integer");
     node->data = ret;
 
     return node;

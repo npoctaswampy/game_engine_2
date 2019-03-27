@@ -7,7 +7,7 @@
 
 #define REHASH_DIV 2
 #define REHASH_MULT 3
-#define DICT_SIZE 10
+#define DICT_SIZE 50
 
 
 typedef struct StringDict_t {
