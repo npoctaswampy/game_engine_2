@@ -20,6 +20,7 @@ void destructConfLinkedList(LinkedList_p* ll);
 
 
 void initConfig(config_p* config){
+	config->dict = NULL;
 }
 
 void destructConfig(config_p* config){

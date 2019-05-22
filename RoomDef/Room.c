@@ -9,7 +9,7 @@ void initRoomTileCollections(room_p* room);
 room_p* buildRoom(images_p* imageBank,config_p* config){ 
     char* roomConfigFile = (char*) (retrieveFromDict(config->dict, "roomConfigFile"))->data;
     if(roomConfigFile != NULL){
-        room_p* room = w_malloc(sizeof(room_p*));
+        room_p* room = w_malloc(sizeof(room_p));
         initRoom(room, imageBank, roomConfigFile);
         return room;
     }else{
@@ -23,7 +23,7 @@ void initRoom(room_p* room, images_p* imageBank, char* configFile){
     initConfig(room->roomConf);
     buildConfigFromFile(room->roomConf, configFile, 0);
     room->imageBank = imageBank;
-    room->imageId = saveImage(room->imageBank, getRoomSpriteFileName());
+    room->imageId = saveImage(room->imageBank, getRoomSpriteFileName(room));
     initRoomTileCollections(room);
     fillRoomTiles(room);
 }
@@ -85,8 +85,9 @@ viewParams_p getViewParams(coordinates_p* center, room_p* room, int layer){
  * All of these should be replaced when config files are finalized. 
  */
 
-char* getRoomSpriteFileName(){
-    return "../sprites/textures2.bmp";
+char* getRoomSpriteFileName(room_p* room){
+    sdNode_p* node = retrieveFromDict(room->roomConf->dict, "sprite_sheet");
+    return (char*) node->data;
 }
 
 void initRoomTileCollections(room_p* room){
@@ -95,8 +96,8 @@ void initRoomTileCollections(room_p* room){
     room->roomTileCollection = w_malloc(LAYERS*sizeof(rtc_p*));
     for(i = 0; i < LAYERS; i++){
         room->roomTileCollection[i] = w_malloc(sizeof(rtc_p));
-        roomH = *((int*) (retrieveFromDict(room->roomConf->dict, "room_height"))->data);
         roomW = *((int*) (retrieveFromDict(room->roomConf->dict, "room_width"))->data);
+        roomH = *((int*) (retrieveFromDict(room->roomConf->dict, "room_height"))->data);
         initRoomTileCollection(room->roomTileCollection[i], roomW, roomH);
     }
 }
@@ -105,19 +106,26 @@ void fillRoomTiles(room_p* room){
     int i,j;
     int upperX = getTileCollectionRows(room->roomTileCollection[1]);
     int upperY = getTileCollectionColumns(room->roomTileCollection[1]);
-    
+
+    sdNode_p* node = retrieveFromDict(room->roomConf->dict, "tile_collection");
+    LinkedList_p* tileList = (LinkedList_p*) node->data;
+
+    LinkedListNode_p* head = getHeadLLNode(tileList);
+    sdNode_p* tileDictNode = (sdNode_p*) head->data;
+    StringDict_p* tileDict = (StringDict_p*) tileDictNode->data;
+
     for(i=0; i < upperX; i++){
         for(j=0; j<upperY; j++){
             coordinates_p* coords = w_malloc(sizeof(coordinates_p));
-            coords->srcX = 0;
-            coords->srcY = 0; 
-            coords->srcW = TILESIZE; 
-            coords->srcH = TILESIZE; 
-            coords->destW = TILESIZE;
-            coords->destH = TILESIZE;
-            coords->mapX = i*TILESIZE;
-            coords->mapY = j*TILESIZE;
-            coords->layer = 1;
+            coords->srcX = *((int*) (retrieveFromDict(tileDict, "srcX"))->data);
+            coords->srcY = *((int*) (retrieveFromDict(tileDict, "srcY"))->data);
+            coords->srcW = *((int*) (retrieveFromDict(tileDict, "srcW"))->data);
+            coords->srcH = *((int*) (retrieveFromDict(tileDict, "srcH"))->data);
+            coords->destW = *((int*) (retrieveFromDict(tileDict, "destW"))->data);
+            coords->destH = *((int*) (retrieveFromDict(tileDict, "destH"))->data);
+            coords->mapX = *((int*) (retrieveFromDict(tileDict, "mapX"))->data);
+            coords->mapY = *((int*) (retrieveFromDict(tileDict, "mapY"))->data);
+            coords->layer = *((int*) (retrieveFromDict(tileDict, "layer"))->data);
             addTile(room->roomTileCollection[1], coords);
         }
     }

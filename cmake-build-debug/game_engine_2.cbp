@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="game_engine_2"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/nate/Documents/game_engine_2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/nate/Documents/game_engine_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/nate/Documents/game_engine_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/nate/Documents/game_engine_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/nate/Documents/game_engine_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/nate/Documents/game_engine_2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/nate/Documents/game_engine_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/nate/Documents/game_engine_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/nate/Documents/game_engine_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/nate/Documents/game_engine_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="game_engine_2">
+				<Option output="/home/nate/Documents/game_engine_2/cmake-build-debug/game_engine_2" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/nate/Documents/game_engine_2/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/nate/Documents/game_engine_2/."/>
+					<Add directory="/home/nate/Documents/game_engine_2/BackgroundDef"/>
+					<Add directory="/home/nate/Documents/game_engine_2/ConfigDef"/>
+					<Add directory="/home/nate/Documents/game_engine_2/ControllerDef"/>
+					<Add directory="/home/nate/Documents/game_engine_2/DataStructures"/>
+					<Add directory="/home/nate/Documents/game_engine_2/ImageBankDef"/>
+					<Add directory="/home/nate/Documents/game_engine_2/PlayerDef"/>
+					<Add directory="/home/nate/Documents/game_engine_2/RoomDef"/>
+					<Add directory="/home/nate/Documents/game_engine_2/WindowDef"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/nate/Documents/game_engine_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 game_engine_2"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/nate/Documents/game_engine_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/nate/Documents/game_engine_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/nate/Documents/game_engine_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="game_engine_2/fast">
+				<Option output="/home/nate/Documents/game_engine_2/cmake-build-debug/game_engine_2" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/nate/Documents/game_engine_2/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/nate/Documents/game_engine_2/."/>
+					<Add directory="/home/nate/Documents/game_engine_2/BackgroundDef"/>
+					<Add directory="/home/nate/Documents/game_engine_2/ConfigDef"/>
+					<Add directory="/home/nate/Documents/game_engine_2/ControllerDef"/>
+					<Add directory="/home/nate/Documents/game_engine_2/DataStructures"/>
+					<Add directory="/home/nate/Documents/game_engine_2/ImageBankDef"/>
+					<Add directory="/home/nate/Documents/game_engine_2/PlayerDef"/>
+					<Add directory="/home/nate/Documents/game_engine_2/RoomDef"/>
+					<Add directory="/home/nate/Documents/game_engine_2/WindowDef"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/nate/Documents/game_engine_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 game_engine_2/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/nate/Documents/game_engine_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/nate/Documents/game_engine_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/nate/Documents/game_engine_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/nate/Documents/game_engine_2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/nate/Documents/game_engine_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/nate/Documents/game_engine_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/nate/Documents/game_engine_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/nate/Documents/game_engine_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/nate/Documents/game_engine_2/BackgroundDef/Background.c">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/BackgroundDef/Background.h">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/Common.h">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/ConfigDef/Config.c">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/ConfigDef/Config.h">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/ControllerDef/Controller.c">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/ControllerDef/Controller.h">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/DataStructures/LinkedList.c">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/DataStructures/LinkedList.h">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/DataStructures/StringDict.c">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/DataStructures/StringDict.h">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/DataStructures/stack.c">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/DataStructures/stack.h">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/DataStructures/table.c">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/DataStructures/table.h">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/ImageBankDef/ImageBank.c">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/ImageBankDef/ImageBank.h">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/Makefile">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/MemManagement.c">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/MemManagement.h">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/PlayerDef/Frame.c">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/PlayerDef/Frame.h">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/PlayerDef/Player.c">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/PlayerDef/Player.h">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/PlayerDef/PlayerAnimation.c">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/PlayerDef/PlayerAnimation.h">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/PlayerDef/PlayerMaker.c">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/RoomDef/Room.c">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/RoomDef/Room.h">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/RoomDef/RoomTileCollection.c">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/RoomDef/RoomTileCollection.h">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/RoomDef/Tile.c">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/RoomDef/Tile.h">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/SDLInternals.c">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/SDLInternals.h">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/WindowDef/Window.c">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/WindowDef/Window.h">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/gameEx/config/master.txt">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/gameEx/config/rooms/test_room1.txt">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/gameEx/config/sampleText.txt">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/gameEx/game">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/game_main.c">
+			<Option target="game_engine_2"/>
+		</Unit>
+		<Unit filename="/home/nate/Documents/game_engine_2/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

@@ -32,9 +32,9 @@ typedef struct coordinates_t{
 	int destY;
 	int destW;
 	int destH;
-        int mapX;
-        int mapY;
-        int layer;
+	int mapX;
+	int mapY;
+	int layer;
 } coordinates_p;
 
 typedef struct view_t{
