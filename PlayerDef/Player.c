@@ -15,17 +15,24 @@ void updatePlayerToCurrentFrame(player_p* player);
 /*Location Calculators*/
 void updatePlayerLocation(player_p* player,int k);
 
+void fillFrames(const player_p *player, StringDict_p* animDict, int index);
+
 /*Public Function Declarations*/
 
-player_p* buildPlayer(images_p* imageBank){
+player_p* buildPlayer(images_p* imageBank, config_p* config){
+    char* playerConfigFile = getStringFromDict(config->dict, "playerConfigFile");
     player_p* player = w_malloc(sizeof(player_p));
-    initPlayer(player, imageBank);
+    initPlayer(player, imageBank, playerConfigFile);
     return player;    
 }
 
-void initPlayer(player_p* player, images_p* imageBank){
+void initPlayer(player_p* player, images_p* imageBank, char* playerConfigFile){
+    player->playerConf = NULL;
+    player->playerConf = (config_p*) malloc(sizeof(config_p));
+    initConfig(player->playerConf);
+    buildConfigFromFile(player->playerConf, playerConfigFile, 0);
     player->imageBank = imageBank;
-    player->imageId = saveImage(player->imageBank, getPlayerSpriteFileName());
+    player->imageId = saveImage(player->imageBank, getPlayerSpriteFileName(player->playerConf));
     fillPlayerSize(player);
     fillPlayerAnimations(player);
     fillPlayerCoords(player);
@@ -102,59 +109,86 @@ void fillPlayerCoords(player_p* player){
     player->coords->layer = 1;
 }
 
-char* getPlayerSpriteFileName(){
-    return "../sprites/sprite_sheet_boy.bmp";
+char* getPlayerSpriteFileName(config_p* config){
+    return getStringFromDict(config->dict, "sprite_sheet_player");
 }
 
 void fillPlayerSize(player_p* player){
-    player->height = 64;
-    player->width = 64;
+    config_p* playerConf = player->playerConf;
+    StringDict_p* playerDict = playerConf->dict;
+    player->height = getIntFromDict(playerDict, "height");
+    player->width = getIntFromDict(playerDict, "width");
 }
 
 void fillPlayerAnimations(player_p* player){
     fillPlayerAnimationParams(player);
-    
-    player->upAnimateIndex = 0;
-    player->animations[player->upAnimateIndex] = w_malloc(sizeof(player_animation_p));
-    initAnimation(player->animations[player->upAnimateIndex], 2, player->width, player->height,ANIMSPEED);
-    addFrame(player->animations[player->upAnimateIndex], 7, 0, 0);
-    addFrame(player->animations[player->upAnimateIndex], 8, 0, 1);
-    
-    player->downAnimateIndex = 1;
-    player->animations[player->downAnimateIndex] = w_malloc(sizeof(player_animation_p));
-    initAnimation(player->animations[player->downAnimateIndex], 2, player->width, player->height,ANIMSPEED);
-    addFrame(player->animations[player->downAnimateIndex], 1, 0, 0);
-    addFrame(player->animations[player->downAnimateIndex], 2, 0, 1);
-    
-    player->leftAnimateIndex = 2;
-    player->animations[player->leftAnimateIndex] = w_malloc(sizeof(player_animation_p));
-    initAnimation(player->animations[player->leftAnimateIndex], 3, player->width, player->height,ANIMSPEED);
-    addFrame(player->animations[player->leftAnimateIndex], 3, 0, 0);
-    addFrame(player->animations[player->leftAnimateIndex], 4, 0, 1);
-    addFrame(player->animations[player->leftAnimateIndex], 5, 0, 2);
-    
-    player->rightAnimateIndex = 3;
-    player->animations[player->rightAnimateIndex] = w_malloc(sizeof(player_animation_p));
-    initAnimation(player->animations[player->rightAnimateIndex], 3, player->width, player->height,ANIMSPEED);
-    addFrame(player->animations[player->rightAnimateIndex], 9, 0, 0);
-    addFrame(player->animations[player->rightAnimateIndex], 10, 0, 1);
-    addFrame(player->animations[player->rightAnimateIndex], 11, 0, 2);
-    
-    player->idleAnimation = 5;
-    player->animations[player->idleAnimation] = w_malloc(sizeof(player_animation_p));
-    initAnimation(player->animations[player->idleAnimation], 1, player->width, player->height,ANIMSPEED);
-    addFrame(player->animations[player->idleAnimation], 0, 0, 0);
+
+    config_p* playerConf = player->playerConf;
+    StringDict_p* playerDict = playerConf->dict;
+    sdNode_p* animDictNode;
+    StringDict_p* animDict;
+    int index,animateSpeed,numFrames;
+
+    LinkedList_p* animations = getLinkedListFromDict(playerDict, "animations");
+    LinkedListNode_p* current = getHeadLLNode(animations);
+
+    while(current != NULL){
+        animDictNode = (sdNode_p*) current->data;
+        animDict = (StringDict_p*) animDictNode->data;
+        index = getIntFromDict(animDict,"index");
+        animateSpeed = getIntFromDict(animDict,"animate_speed");
+        numFrames = getIntFromDict(animDict,"num_frames");
+
+        initAnimation(player->animations[index], numFrames, player->width, player->height,animateSpeed);
+        fillFrames(player, animDict, index);
+
+        current = current->next;
+    }
     
     player->crntAnimateIndex = player->idleAnimation;
 }
 
+void fillFrames(const player_p *player, StringDict_p* animDict, int index) {
+    sdNode_p* frameDictNode;
+    StringDict_p *frameDict;
+    int spriteCol,spriteRow,order;
+
+    LinkedList_p *frames = getLinkedListFromDict(animDict, "frames");
+    LinkedListNode_p *fCurrent = getHeadLLNode(frames);
+
+    while (fCurrent != NULL) {
+        frameDictNode = (sdNode_p *) fCurrent->data;
+        frameDict = (StringDict_p *) frameDictNode->data;
+        spriteCol = getIntFromDict(frameDict, "sprite_col");
+        spriteRow = getIntFromDict(frameDict, "sprite_row");
+        order = getIntFromDict(frameDict, "order");
+        addFrame(player->animations[index], spriteCol, spriteRow, order);
+
+        fCurrent = fCurrent->next;
+    }
+}
+
 void fillPlayerAnimationParams(player_p* player){
-    player->numberOfAnimates = 10;
+    config_p* playerConf = player->playerConf;
+    StringDict_p* playerDict = playerConf->dict;
+    player->numberOfAnimates = getIntFromDict(playerDict, "number_of_animates");
     player->animations = w_malloc(player->numberOfAnimates*sizeof(player_animation_p*));
     int i;
     for(i=0; i<player->numberOfAnimates; i++){
         player->animations[i] = NULL;
     }
+    player->upAnimateIndex = getIntFromDict(playerDict, "up_animate_index");
+    player->downAnimateIndex = getIntFromDict(playerDict, "down_animate_index");
+    player->leftAnimateIndex = getIntFromDict(playerDict, "left_animate_index");
+    player->rightAnimateIndex = getIntFromDict(playerDict, "right_animate_index");
+    player->idleAnimation = getIntFromDict(playerDict, "idle_animate_index");
+    player->moveSpeed = getIntFromDict(playerDict, "travel_speed");
+
+    player->animations[player->upAnimateIndex] = w_malloc(sizeof(player_animation_p));
+    player->animations[player->downAnimateIndex] = w_malloc(sizeof(player_animation_p));
+    player->animations[player->leftAnimateIndex] = w_malloc(sizeof(player_animation_p));
+    player->animations[player->rightAnimateIndex] = w_malloc(sizeof(player_animation_p));
+    player->animations[player->idleAnimation] = w_malloc(sizeof(player_animation_p));
 }
 
 /*Animation Helper Functions*/
@@ -175,16 +209,16 @@ void updatePlayerToCurrentFrame(player_p* player){
 void updatePlayerLocation(player_p* player,int k){
     switch(k){
         case UP:
-            player->coords->mapY-=8;
+            player->coords->mapY-=player->moveSpeed;
             break;
         case DOWN:
-            player->coords->mapY+=8;
+            player->coords->mapY+=player->moveSpeed;
             break;
         case LEFT:
-            player->coords->mapX-=8;
+            player->coords->mapX-=player->moveSpeed;
             break;
         case RIGHT:
-            player->coords->mapX+=8;
+            player->coords->mapX+=player->moveSpeed;
             break;   
     }
 }

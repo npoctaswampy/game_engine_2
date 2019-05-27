@@ -25,5 +25,7 @@ void destructDict(StringDict_p* dict);
 void insertIntoDict(StringDict_p* dict, char* key, sdNode_p* value);
 sdNode_p* deleteFromDict(StringDict_p* dict, char* key);
 sdNode_p* retrieveFromDict(StringDict_p* dict, char* key);
-
+int getIntFromDict(StringDict_p* dict, char* key);
+char* getStringFromDict(StringDict_p* dict, char* key);
+LinkedList_p* getLinkedListFromDict(StringDict_p* dict, char* key);
 #endif

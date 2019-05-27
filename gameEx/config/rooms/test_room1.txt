@@ -24,8 +24,8 @@
 "destY":64,
 "destW":64,
 "destH":64,
-"mapX":0,
-"mapY":0,
+"mapX":64,
+"mapY":64,
 "layer":1
 }]
 }

@@ -91,16 +91,22 @@ sdNode_p* processObject(FILE* fp){
 	fastForwardTo(':',fp);
 	char current = peekAtNextChar(fp);
 
-	if(current == '"'){
-		current = fgetc(fp);	
-		val = (void*) getNextString(fp);
-	}
-	if(current >= '0' && current <= '9')
-		val = getNextInt(fp);
-	if(current == '{')
-		val = getNextDict(fp);
-	if(current == '[')
-		val = getNextArray(fp);
+	while(val == NULL) {
+        if (current == '"') {
+            current = fgetc(fp);
+            val = (void *) getNextString(fp);
+        }
+        if (current >= '0' && current <= '9')
+            val = getNextInt(fp);
+        if (current == '{')
+            val = getNextDict(fp);
+        if (current == '[')
+            val = getNextArray(fp);
+        if(val == NULL){
+            fgetc(fp);
+            current = peekAtNextChar(fp);
+        }
+    }
 
 	return val;
 }

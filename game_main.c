@@ -59,7 +59,7 @@ gamestate_p* initializeSystems(char* configFile){
     gameState->imageBank = buildImageBank();
     gameState->config = buildConfig(configFile);
     gameState->sdlSystem = buildSdlSystem(gameState->imageBank);
-    gameState->player = buildPlayer(gameState->imageBank);
+    gameState->player = buildPlayer(gameState->imageBank, gameState->config);
     gameState->room = buildRoom(gameState->imageBank, gameState->config);
     gameState->background = buildBackground(gameState->imageBank);
     gameState->controller = buildController(gameState->player, gameState->room, gameState->sdlSystem, gameState->background);

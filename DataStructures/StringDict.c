@@ -34,6 +34,26 @@ sdNode_p* retrieveFromDict(StringDict_p* dict, char* key){
 	return (sdNode_p*) table_retrieve(dict->table, (hashkey_t) id);
 }
 
+int getIntFromDict(StringDict_p* dict, char* key){
+    sdNode_p* node =  retrieveFromDict(dict, key);
+    if(node != NULL)
+        return *((int*) node->data);
+    else return -1;
+}
+
+char* getStringFromDict(StringDict_p* dict, char* key){
+    sdNode_p* node =  retrieveFromDict(dict, key);
+    if(node != NULL)
+        return (char*) node->data;
+    else return NULL;
+}
+
+LinkedList_p* getLinkedListFromDict(StringDict_p* dict, char* key){
+    sdNode_p* node =  retrieveFromDict(dict, key);
+    if(node != NULL)
+        return (LinkedList_p*) node->data;
+    else return NULL;
+}
 
 void rehashIfNecessary(StringDict_p* dict){
 	int threshold = dict->table->size / REHASH_DIV;

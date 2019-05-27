@@ -1,3 +1,4 @@
 {
-"roomConfigFile":"config/rooms/test_room1.txt"
+"roomConfigFile":"config/rooms/test_room1.txt",
+"playerConfigFile":"config/player/player_file_1.txt"
 }
