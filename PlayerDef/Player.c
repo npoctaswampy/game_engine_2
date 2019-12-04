@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "Frame.h"
+#include "../Animation/Frame.h"
 
 /*Initialization Function Declarations*/
 void fillPlayerCoords(player_p* player);
@@ -172,7 +172,7 @@ void fillPlayerAnimationParams(player_p* player){
     config_p* playerConf = player->playerConf;
     StringDict_p* playerDict = playerConf->dict;
     player->numberOfAnimates = getIntFromDict(playerDict, "number_of_animates");
-    player->animations = w_malloc(player->numberOfAnimates*sizeof(player_animation_p*));
+    player->animations = w_malloc(player->numberOfAnimates*sizeof(animation_p*));
     int i;
     for(i=0; i<player->numberOfAnimates; i++){
         player->animations[i] = NULL;
@@ -184,11 +184,11 @@ void fillPlayerAnimationParams(player_p* player){
     player->idleAnimation = getIntFromDict(playerDict, "idle_animate_index");
     player->moveSpeed = getIntFromDict(playerDict, "travel_speed");
 
-    player->animations[player->upAnimateIndex] = w_malloc(sizeof(player_animation_p));
-    player->animations[player->downAnimateIndex] = w_malloc(sizeof(player_animation_p));
-    player->animations[player->leftAnimateIndex] = w_malloc(sizeof(player_animation_p));
-    player->animations[player->rightAnimateIndex] = w_malloc(sizeof(player_animation_p));
-    player->animations[player->idleAnimation] = w_malloc(sizeof(player_animation_p));
+    player->animations[player->upAnimateIndex] = w_malloc(sizeof(animation_p));
+    player->animations[player->downAnimateIndex] = w_malloc(sizeof(animation_p));
+    player->animations[player->leftAnimateIndex] = w_malloc(sizeof(animation_p));
+    player->animations[player->rightAnimateIndex] = w_malloc(sizeof(animation_p));
+    player->animations[player->idleAnimation] = w_malloc(sizeof(animation_p));
 }
 
 /*Animation Helper Functions*/

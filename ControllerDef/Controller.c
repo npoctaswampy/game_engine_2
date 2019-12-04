@@ -16,7 +16,7 @@ void destructController(controller_p* controller){
 }
 
 int runController(controller_p* controller){
-    return processKeys(controller,getKeyStateCommand());
+    return processKeys(controller, getKeyStateCommand());
 }
 
 stack* getView(controller_p* controller, int layer){

@@ -1,5 +1,5 @@
 {
-"sprite_sheet":"../sprites/vampire_sprite.bmp",
+"sprite_sheet":"../sprites/town_textures.bmp",
 "room_height":10,
 "room_width":10,
 "tile_collection":[{

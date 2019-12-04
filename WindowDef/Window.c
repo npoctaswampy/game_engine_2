@@ -12,14 +12,17 @@ void initWindow(window_p* window, sdl_p* sdlSystem, controller_p* controller, im
     window->imageBank = imageBank;
 }
 
-void runWindow(window_p* window){
-    int i;
-    stack* views = NULL;
-    for(i = 0; i < LAYERS; i++){
-        views = getView(window->controller, i);
-        processAndDrawViews(window, views);
+void runWindow(void* window){
+    window_p* _window = (window_p*) window;
+    int i; stack* views = NULL;
+    while(1){
+        usleep(10000);
+        for(i = 0; i < LAYERS; i++){
+            views = getView(_window->controller, i);
+            processAndDrawViews(_window, views);
+        }
+        flipPage(_window->sdlSystem);
     }
-    flipPage(window->sdlSystem);
 }
 
 void processAndDrawViews(window_p* window, stack* views){

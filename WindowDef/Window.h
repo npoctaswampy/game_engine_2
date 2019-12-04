@@ -12,6 +12,6 @@ typedef struct window_t{
 } window_p;
 
 void initWindow(window_p* window, sdl_p* sdlSystem, controller_p* controller, images_p* imageBank);
-void runWindow(window_p* window);
+void runWindow(void* window);
 
 #endif

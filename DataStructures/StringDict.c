@@ -55,6 +55,13 @@ LinkedList_p* getLinkedListFromDict(StringDict_p* dict, char* key){
     else return NULL;
 }
 
+stack* getStackFromDict(StringDict_p* dict, char* key){
+    sdNode_p* node =  retrieveFromDict(dict, key);
+    if(node != NULL)
+        return (stack*) node->data;
+    else return NULL;
+}
+
 void rehashIfNecessary(StringDict_p* dict){
 	int threshold = dict->table->size / REHASH_DIV;
 	if(dict->table->num_keys > threshold){

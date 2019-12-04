@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <time.h>
 #include <stdlib.h>
+#include <pthread.h>
 #include "Common.h"
 #include "SDLInternals.h"
 #include "WindowDef/Window.h"
@@ -9,6 +11,7 @@
 #include "ImageBankDef/ImageBank.h"
 #include "BackgroundDef/Background.h"
 #include "ConfigDef/Config.h"
+
 
 typedef struct gamestate_t{
     window_p* window;
@@ -27,30 +30,47 @@ images_p* buildImageBank();
 sdl_p* buildSdlSystem();
 config_p* buildConfig(char* configFile);
 background_p* buildBackground(images_p* imageBank);
-controller_p* buildController(player_p* player, room_p* room, sdl_p* sdlSystem, background_p* background);
+controller_p* buildController(gamestate_p* gamestate);
 window_p* buildWindow(sdl_p* sdlSystem, controller_p* controller, images_p* imageBank);
 void destructGameState(gamestate_p* gameState);
 gamestate_p* evaluateGameState(gamestate_p* gameState);
+pthread_t* runThreads(gamestate_p* gameState);
+void stopThreads(pthread_t* thread_ids);
 
 int main(int argc, char* argv[]){
-    if(argc > 1){
-        gamestate_p* gameState = initializeSystems(argv[1]);
-        runGame(gameState);
-        destructGameState(gameState);
-        exit(0);
-    }else{
-        printf("No config file specified. Exiting...\n");
-        return 0;
-    }
+    freopen( "output.txt", "w", stdout );
+    clock_t start, end;
+
+    gamestate_p* gameState = initializeSystems("config/master.txt");
+    pthread_t* threadIds = runThreads(gameState);
+    runGame(gameState);
+
+    stopThreads(threadIds);
+    destructGameState(gameState);
+    exit(0);
 }
 
 void runGame(gamestate_p* gameState){
     int quit = 0;
+    clock_t start, end;
     while(quit == 0){
+        start = clock();
         usleep(10000);
-        runWindow(gameState->window);
         quit = runController(gameState->controller);
+        end = clock();
+        printf("  Game Loop, time=%g \n",1000*((double)(end-start))/CLOCKS_PER_SEC);
     }
+}
+
+pthread_t* runThreads(gamestate_p* gameState){
+    pthread_t* thread_ids = (pthread_t*) w_malloc(sizeof(pthread_t));
+    pthread_create(thread_ids, NULL, runWindow, (void*)gameState->window);
+    return thread_ids;
+}
+
+void stopThreads(pthread_t* thread_ids){
+    pthread_join(thread_ids[0], NULL);
+    w_free(thread_ids);
 }
 
 gamestate_p* initializeSystems(char* configFile){
@@ -62,7 +82,7 @@ gamestate_p* initializeSystems(char* configFile){
     gameState->player = buildPlayer(gameState->imageBank, gameState->config);
     gameState->room = buildRoom(gameState->imageBank, gameState->config);
     gameState->background = buildBackground(gameState->imageBank);
-    gameState->controller = buildController(gameState->player, gameState->room, gameState->sdlSystem, gameState->background);
+    gameState->controller = buildController(gameState);
     gameState->window = buildWindow(gameState->sdlSystem, gameState->controller, gameState->imageBank);
     
     return evaluateGameState(gameState);
@@ -124,9 +144,9 @@ background_p* buildBackground(images_p* imageBank){
     return background; 
 }
 
-controller_p* buildController(player_p* player, room_p* room, sdl_p* sdlSystem, background_p* background){
+controller_p* buildController(gamestate_p* gameState){
     controller_p* controller = w_malloc(sizeof(controller_p));
-    initController(controller, player, room, sdlSystem, background);
+    initController(controller, gameState->player, gameState->room, gameState->sdlSystem, gameState->background);
     return controller;
 }
 

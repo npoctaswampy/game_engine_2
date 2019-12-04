@@ -28,4 +28,5 @@ sdNode_p* retrieveFromDict(StringDict_p* dict, char* key);
 int getIntFromDict(StringDict_p* dict, char* key);
 char* getStringFromDict(StringDict_p* dict, char* key);
 LinkedList_p* getLinkedListFromDict(StringDict_p* dict, char* key);
+stack* getStackFromDict(StringDict_p* dict, char* key);
 #endif

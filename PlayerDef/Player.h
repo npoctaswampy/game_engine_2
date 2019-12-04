@@ -1,6 +1,6 @@
 #include "../Common.h"
 #include "../ImageBankDef/ImageBank.h"
-#include "PlayerAnimation.h"
+#include "../Animation/Animation.h"
 #include "../ConfigDef/Config.h"
 
 #ifndef PLAYER
@@ -16,7 +16,7 @@ typedef struct player_t{
     int height;
     int width;
     int speed;
-    player_animation_p** animations;
+    animation_p** animations;
     int numberOfAnimates;
     int crntAnimateIndex;
     int upAnimateIndex;
