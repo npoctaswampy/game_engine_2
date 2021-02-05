@@ -1,7 +1,9 @@
 #include "Mailbox.h"
 
 mailbox_p* constructMailbox(){
-    return w_malloc(sizeof(mailbox_p));
+	mailbox_p* mailbox = (mailbox_p*) w_malloc(sizeof(mailbox_p));
+	mailbox->messageStack = NULL;
+    return mailbox;
 }
 
 void deliverMail(mailbox_p* mailbox, message_p* message){
@@ -9,12 +11,12 @@ void deliverMail(mailbox_p* mailbox, message_p* message){
 }
 
 message_p* checkMail(mailbox_p* mailbox){
-    pop_stack(&(mailbox->messageStack));
+    return (message_p*) pop_stack(&(mailbox->messageStack));
 }
 
-message_p* buildMessage(int majorSys, int actionType, void* optObj){
+message_p* buildMessage(char* addr, char* actionType, void* optObj){
     message_p* message = w_malloc(sizeof(message_p));
-    message->majorSubsystem = majorSys;
+    message->address = addr;
     message->actionType = actionType;
     message->optObj = optObj;
     return message;

@@ -42,3 +42,10 @@ stack* combineStacks(stack* src, stack* dst){
     }
     return dst;
 }
+
+void foreach(stack* s, void* subsystem, void (*f)(void*, void*)) {
+	void* node = NULL;
+	while( (node=pop_stack(&s)) != NULL ){
+		(*f)(subsystem, node);
+	}
+}

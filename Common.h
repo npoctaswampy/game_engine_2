@@ -1,6 +1,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stddef.h>
+#include <pthread.h>
 
 #ifndef MEMMANAGE
 #define MEMMANAGE
@@ -46,6 +48,9 @@ typedef enum{FIRST,Q,ESCAPE,F,P,
 	     LEFT,RIGHT,UP,DOWN,
 	     X,Z,E,NONE
 	     } key;
+
+#define WINDOW_ADDR "WindowLn"
+#define CONTROLLER_ADDR "ControllerLn"
              
 #define LAYERS 2
 #endif

@@ -34,6 +34,12 @@ sdNode_p* retrieveFromDict(StringDict_p* dict, char* key){
 	return (sdNode_p*) table_retrieve(dict->table, (hashkey_t) id);
 }
 
+int existsInDict(StringDict_p* dict, char* key){
+	int id = key_from_string(key);
+	if(table_retrieve(dict->table, (hashkey_t) id) != NULL) return 1;
+	else return 0;
+}
+
 int getIntFromDict(StringDict_p* dict, char* key){
     sdNode_p* node =  retrieveFromDict(dict, key);
     if(node != NULL)

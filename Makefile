@@ -5,20 +5,20 @@ LINKER_FLAGS = -lmingw32 -lSDL2main -lSDL2 -lm
 OBJS=game_main.o particle.o background.o resources.o
 CC=gcc
 
-BIN = game game_main.o Window.o Controller.o Config.o Player_game.o Room.o Background.o ImageBank.o SDLInternals.o stack.o MemManagement.o Animation.o Frame.o RoomTileCollection.o Tile.o StringDict.o LinkedList.o clean
+BIN = game game_main.o Window.o Controller.o Config.o Player_game.o Room.o Background.o ImageBank.o SDLInternals.o stack.o MemManagement.o Animation.o Frame.o RoomTileCollection.o Tile.o MailSystem.o Mailbox.o StringDict.o LinkedList.o clean
 
 all: $(BIN)
 
-game: game_main.o stack.o SDLInternals.o MemManagement.o Window.o Controller.o Config.o Player_game.o Room.o Background.o ImageBank.o table.o Animation.o Frame.o RoomTileCollection.o Tile.o StringDict.o LinkedList.o
-	$(CC) $(COMPILER_FLAGS) $(INCLUDE_PATH) $(LIBRARY_PATH) game_main.o stack.o SDLInternals.o MemManagement.o Window.o Controller.o Config.o Player_game.o Room.o Background.o ImageBank.o table.o Animation.o Frame.o RoomTileCollection.o Tile.o StringDict.o LinkedList.o -o ./gameEx/game.exe $(LINKER_FLAGS)
+game: game_main.o stack.o SDLInternals.o MemManagement.o Window.o Controller.o Config.o Player_game.o Room.o Background.o ImageBank.o table.o Animation.o Frame.o RoomTileCollection.o Tile.o StringDict.o LinkedList.o MailSystem.o MailBox.o
+	$(CC) $(COMPILER_FLAGS) $(INCLUDE_PATH) $(LIBRARY_PATH) game_main.o stack.o SDLInternals.o MemManagement.o Window.o Controller.o Config.o Player_game.o Room.o Background.o ImageBank.o table.o Animation.o Frame.o RoomTileCollection.o Tile.o MailSystem.o MailBox.o StringDict.o LinkedList.o -o ./gameEx/game.exe $(LINKER_FLAGS)
 		
-game_main.o: game_main.c SDLInternals.h MemManagement.h WindowDef/Window.h ControllerDef/Controller.h PlayerDef/Player.h ImageBankDef/ImageBank.h Common.h
+game_main.o: game_main.c SDLInternals.h MemManagement.h WindowDef/Window.h ControllerDef/Controller.h PlayerDef/Player.h ImageBankDef/ImageBank.h MailSystemDef/MailSystem.h Common.h
 	$(CC) $(COMPILER_FLAGS) $(INCLUDE_PATH) $(LIBRARY_PATH) -c game_main.c $(LINKER_FLAGS)
 	
-Window.o: WindowDef/Window.c ControllerDef/Controller.h SDLInternals.h ImageBankDef/ImageBank.h Common.h
+Window.o: WindowDef/Window.c ControllerDef/Controller.h SDLInternals.h ImageBankDef/ImageBank.h MailSystemDef/MailSystem.h Common.h
 	$(CC) $(COMPILER_FLAGS) $(INCLUDE_PATH) $(LIBRARY_PATH) -c WindowDef/Window.c $(LINKER_FLAGS)
 	
-Controller.o: ControllerDef/Controller.h MemManagement.h Common.h PlayerDef/Player.h RoomDef/Room.h BackgroundDef/Background.h
+Controller.o: ControllerDef/Controller.h MemManagement.h Common.h PlayerDef/Player.h RoomDef/Room.h BackgroundDef/Background.h 
 	$(CC) $(COMPILER_FLAGS) $(INCLUDE_PATH) $(LIBRARY_PATH) -c ControllerDef/Controller.c $(LINKER_FLAGS)
 	
 Config.o: ConfigDef/Config.h DataStructures/StringDict.h DataStructures/table.h DataStructures/LinkedList.h
@@ -50,6 +50,12 @@ Frame.o: Animation/Frame.c Animation/Frame.h
 
 Tile.o: RoomDef/Tile.c RoomDef/Tile.h Common.h
 	$(CC) $(COMPILER_FLAGS) -c RoomDef/Tile.c
+	
+MailSystem.o: MailSystemDef/MailSystem.c MailSystemDef/MailSystem.h  MailSystemDef/MailboxDef/Mailbox.h Common.h
+	$(CC) $(COMPILER_FLAGS) -c MailSystemDef/MailSystem.c 
+	
+MailBox.o: MailSystemDef/MailboxDef/Mailbox.c MailSystemDef/MailboxDef/Mailbox.h Common.h
+	$(CC) $(COMPILER_FLAGS) -c MailSystemDef/MailboxDef/Mailbox.c
 
 StringDict.o: DataStructures/StringDict.c DataStructures/StringDict.h Common.h
 	$(CC) $(COMPILER_FLAGS) -c DataStructures/StringDict.c

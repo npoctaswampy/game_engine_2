@@ -6,10 +6,14 @@
 void processAndDrawViews(window_p* window, stack* views);
 void drawView(window_p* window, view_p* view);
 
-void initWindow(window_p* window, sdl_p* sdlSystem, controller_p* controller, images_p* imageBank){
+void initWindow(window_p* window, sdl_p* sdlSystem, controller_p* controller, images_p* imageBank, mailsystem_p* mailSystem, background_p* background){
     window->sdlSystem = sdlSystem;
     window->controller = controller;
     window->imageBank = imageBank;
+    window->mailSystem = mailSystem;
+    window->mailAddress = WINDOW_ADDR;
+    window->background = background;
+    subscribeForMail(mailSystem, window->mailAddress, constructMailbox());
 }
 
 void runWindow(void* window){
@@ -17,18 +21,21 @@ void runWindow(void* window){
     int i; stack* views = NULL;
     while(1){
         usleep(10000);
-        for(i = 0; i < LAYERS; i++){
-            views = getView(_window->controller, i);
-            processAndDrawViews(_window, views);
+        printf("Getting mail...\n");
+		views = emptyMail(_window->mailSystem, _window->mailAddress);
+        printf("Done getting mail...\n");
+        if(views != NULL){
+			processAndDrawViews(_window, views);
+			flipPage(_window->sdlSystem);
         }
-        flipPage(_window->sdlSystem);
     }
 }
 
 void processAndDrawViews(window_p* window, stack* views){
-    view_p* view = NULL;
-    while((view = (view_p*) pop_stack(&views) ) != NULL){
-        drawView(window, view);
+	message_p* view = NULL;
+	drawView(window, getBackgroundView(window->background)->data);
+    while((view = (message_p*) pop_stack(&views)) != NULL){
+        drawView(window, view->optObj);
     }
 }
 

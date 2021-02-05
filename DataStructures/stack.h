@@ -10,3 +10,5 @@ void* pop_stack(stack** head);
 void freeStack(stack* head);
 stack* copyStack(stack* head);
 stack* combineStacks(stack* src, stack* dst);
+//Empties the stack passed in
+void foreach(stack* s, void* subsystem, void (*f)(void*, void*));
