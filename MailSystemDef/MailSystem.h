@@ -1,6 +1,6 @@
 #include "../DataStructures/LinkedList.h"
 #include "../DataStructures/StringDict.h"
-#include "MailboxDef/MailBox.h"
+#include "MailboxDef/Mailbox.h"
 
 #ifndef MAILSYSTEM
 #define MAILSYSTEM
@@ -22,6 +22,7 @@ void unsubscribe(mailsystem_p* mailSystem, char* address);
 void sendMail(mailsystem_p* mailSystem, message_p* message);
 void sendSingleMail(mailsystem_p* mailSystem, message_p* message);
 void blastMail(mailsystem_p* mailSystem, message_p* message);
+stack* emptyMail(mailsystem_p* mailSystem, char* address);
 
 
 #endif /* MAILSYSTEM */

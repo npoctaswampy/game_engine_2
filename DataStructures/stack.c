@@ -6,7 +6,7 @@ stack* new_node(void* data)
 {
 	stack* node = (stack*) w_malloc(sizeof(stack));
 	node->data = data;
-        node->next = NULL;
+    node->next = NULL;
 	return node;
 }
 
@@ -27,7 +27,8 @@ void* pop_stack(stack **head)
 	return ret;
 }
 
-void freeStack(stack* head){ 
+void freeStack(stack* head)
+{
 	void* ret = NULL;
 	while((ret=pop_stack(&head))!=NULL){
 		w_free(ret);	
@@ -35,7 +36,8 @@ void freeStack(stack* head){
         w_free(head);
 }
 
-stack* combineStacks(stack* src, stack* dst){
+stack* combineStacks(stack* src, stack* dst)
+{
     void* node = NULL;
     while( (node=pop_stack(&src)) != NULL ){
         push_stack(&dst,node);
@@ -43,7 +45,8 @@ stack* combineStacks(stack* src, stack* dst){
     return dst;
 }
 
-void foreach(stack* s, void* subsystem, void (*f)(void*, void*)) {
+void foreach(stack* s, void* subsystem, void (*f)(void*, void*))
+{
 	void* node = NULL;
 	while( (node=pop_stack(&s)) != NULL ){
 		(*f)(subsystem, node);
