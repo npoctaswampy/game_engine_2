@@ -28,6 +28,7 @@ stack* envelopeMailStack(stack* letters, char* address){
 	void* letter = NULL;
 	while((letter = pop_stack(&letters)) != NULL){
 		message = w_malloc(sizeof(message_p));
+		message->actionType = "";
 		message->address = address;
 		message->optObj = letter;
 		push_stack(&envelopeStack, message);
@@ -64,6 +65,11 @@ void blastMail(mailsystem_p* mailSystem, message_p* message){
 		deliverMail(mailbox, message);
 		currentNode = currentNode->next;
 	}while(currentNode != NULL);
+}
+
+void blastFlag(mailsystem_p* mailSystem, char* flag){
+	message_p* message = buildMessage(NULL, flag, NULL);
+	blastMail(mailSystem, message);
 }
 
 

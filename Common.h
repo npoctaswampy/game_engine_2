@@ -25,6 +25,8 @@
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 960
 
+#define STOP_THREADS_MESSAGE "StopThreads"
+
 typedef struct coordinates_t{
 	int srcX;
 	int srcY; 

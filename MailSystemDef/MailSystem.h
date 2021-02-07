@@ -22,6 +22,7 @@ void unsubscribe(mailsystem_p* mailSystem, char* address);
 void sendMail(mailsystem_p* mailSystem, message_p* message);
 void sendSingleMail(mailsystem_p* mailSystem, message_p* message);
 void blastMail(mailsystem_p* mailSystem, message_p* message);
+void blastFlag(mailsystem_p* mailSystem, char* flag);
 stack* emptyMail(mailsystem_p* mailSystem, char* address);
 
 

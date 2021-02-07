@@ -36,7 +36,7 @@ window_p* buildWindow(sdl_p* sdlSystem, controller_p* controller, images_p* imag
 void destructGameState(gamestate_p* gameState);
 gamestate_p* evaluateGameState(gamestate_p* gameState);
 pthread_t* runThreads(gamestate_p* gameState);
-void stopThreads(pthread_t* thread_ids);
+void stopThreads(pthread_t* thread_ids, gamestate_p* gameState);
 mailsystem_p* buildMailSystem();
 
 int main(int argc, char* argv[]){
@@ -47,7 +47,7 @@ int main(int argc, char* argv[]){
     pthread_t* threadIds = runThreads(gameState);
     runGame(gameState);
 
-    stopThreads(threadIds);
+    stopThreads(threadIds, gameState);
     destructGameState(gameState);
     exit(0);
 }
@@ -70,7 +70,8 @@ pthread_t* runThreads(gamestate_p* gameState){
     return thread_ids;
 }
 
-void stopThreads(pthread_t* thread_ids){
+void stopThreads(pthread_t* thread_ids, gamestate_p* gameState){
+	blastFlag(gameState->mailSystem, STOP_THREADS_MESSAGE);
     pthread_join(thread_ids[0], NULL);
     w_free(thread_ids);
 }
